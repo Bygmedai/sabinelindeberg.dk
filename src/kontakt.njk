@@ -1,0 +1,494 @@
+---
+layout: base.njk
+title: "Booking & Kontakt — Indre Kald og Kraft"
+description: "Kontakt Sabine Lindeberg i Frederikssund. Book hypnoseterapi, terapeutisk samtale eller shamanistiske cirkler."
+ogTitle: "Booking & Kontakt — Indre Kald og Kraft"
+ogDescription: "Skriv, ring eller book direkte online. Kontakt Sabine Lindeberg."
+jsonLd: |
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "Indre Kald og Kraft — Sabine Lindeberg",
+      "url": "https://sabinelindeberg.dk",
+      "telephone": "+4541120149",
+      "email": "sabinelindeberg@hotmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Frederikssund",
+        "addressCountry": "DK"
+      },
+      "areaServed": "Frederikssund, Denmark"
+    }
+  }
+extraHead: |
+  <style>
+  /* ========== BUTTONS ========== */
+  .btn {
+    display: inline-block;
+    padding: 15px 36px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--petrol);
+  }
+
+  .btn-gold:hover {
+    background: var(--gold-light);
+    color: var(--petrol);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+  }
+
+  .btn-teal {
+    background: var(--teal);
+    color: #FFFFFF;
+  }
+
+  .btn-teal:hover {
+    background: var(--teal-light);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+  }
+
+  /* ========== SECTION LABELS ========== */
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background: var(--petrol);
+    overflow: hidden;
+    padding-top: 72px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('/assets/materiale/sabine-smile.jpg') center/cover no-repeat;
+    opacity: 0.15;
+    filter: blur(1px);
+  }
+
+  .hero-gradient {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 250px;
+    background: linear-gradient(to top, var(--petrol), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    text-align: center;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 62px);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 23px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+    max-width: 700px;
+  }
+
+  /* ========== MAIN CONTENT ========== */
+  .main-content {
+    padding: 100px 0;
+    background: var(--sand);
+  }
+
+  .main-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: flex-start;
+  }
+
+  .contact-info h2 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-style: italic;
+    color: var(--petrol);
+    margin-bottom: 24px;
+  }
+
+  .contact-info p {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 32px 0;
+  }
+
+  .detail-block {
+    padding: 20px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--gold);
+  }
+
+  .detail-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .detail-content {
+    font-size: 18px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .detail-content a {
+    color: var(--teal);
+  }
+
+  .detail-content a:hover {
+    color: var(--gold);
+  }
+
+  /* ========== FORM ========== */
+  .contact-form {
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(30, 61, 64, 0.2);
+    border-radius: 6px;
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    color: var(--text);
+    transition: var(--transition);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.04);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--gold);
+    color: var(--petrol);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .form-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+  }
+
+  /* ========== PRACTICAL INFO ========== */
+  .practical-section {
+    padding: 100px 0;
+    background: var(--white);
+  }
+
+  .practical-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .practical-header h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  .practical-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .practical-card {
+    padding: 40px;
+    background: var(--sand-light);
+    border-radius: var(--radius);
+  }
+
+  .practical-card h3 {
+    font-size: 22px;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--petrol);
+  }
+
+  .practical-card p {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.9;
+  }
+
+  .practical-card ul {
+    font-size: 18px;
+    color: var(--text);
+    margin-top: 16px;
+    padding-left: 20px;
+  }
+
+  .practical-card li {
+    margin-bottom: 10px;
+    line-height: 1.8;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 960px) {
+    .main-inner { grid-template-columns: 1fr; }
+    .practical-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .practical-card { padding: 24px; }
+    .contact-form { padding: 24px; }
+  }
+
+  /* FE6: View Transitions */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: vt-fade-out 0.25s ease; }
+  ::view-transition-new(root) { animation: vt-fade-in 0.25s ease; }
+  @keyframes vt-fade-out { to { opacity: 0; } }
+  @keyframes vt-fade-in { from { opacity: 0; } }
+  </style>
+extraScripts: |
+  <script>
+  // Simple form handling with mailto
+  const form = document.querySelector('.contact-form form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
+
+      const subject = encodeURIComponent('Ny besked fra: ' + name);
+      const body = encodeURIComponent(
+        'Navn: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'Telefon: ' + phone + '\n' +
+        '\nBesked:\n' + message
+      );
+
+      window.location.href = 'mailto:sabinelindeberg@hotmail.com?subject=' + subject + '&body=' + body;
+    });
+  }
+  </script>
+---
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-gradient"></div>
+
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-label">Kom i kontakt</span>
+      <h1>Booking & Kontakt</h1>
+      <p class="hero-tagline">Skriv, ring eller book direkte online</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAIN CONTENT ========== -->
+<section class="main-content">
+  <div class="container">
+    <div class="main-inner" data-reveal>
+      <div class="contact-info">
+        <span class="section-label">Sådan når du mig</span>
+        <h2>Kontakt mig direkte</h2>
+        <p>
+          Du kan kontakte mig via email, telefon eller kontaktformularen til højre.
+          Jeg vender tilbage hurtigst muligt — typisk inden for 24 timer.
+        </p>
+        <div class="contact-details">
+          <div class="detail-block">
+            <div class="detail-label">Telefon</div>
+            <div class="detail-content">
+              <a href="tel:+4541120149">+45 4112 0149</a>
+            </div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Email</div>
+            <div class="detail-content">
+              <a href="mailto:sabinelindeberg@hotmail.com">sabinelindeberg@hotmail.com</a>
+            </div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Lokation</div>
+            <div class="detail-content">Frederikssund, Danmark</div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Priser</div>
+            <div class="detail-content">Hypnoseterapi: 1.200 kr · Rygeafvænning: 2.800 kr</div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Sessionslængde</div>
+            <div class="detail-content">60–90 minutter</div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Format</div>
+            <div class="detail-content">I Frederikssund eller online</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3 style="font-size: 20px; margin-bottom: 24px; color: var(--petrol);">Send en besked</h3>
+        <form>
+          <div class="form-group">
+            <label for="name">Dit navn</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Din email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefonnummer (valgfrit)</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div class="form-group">
+            <label for="message">Din besked</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send besked</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRACTICAL INFO ========== -->
+<section class="practical-section">
+  <div class="container">
+    <div class="practical-header" data-reveal>
+      <span class="section-label">Praktisk information</span>
+      <h2>Det er godt at vide</h2>
+    </div>
+    <div class="practical-grid">
+      <div class="practical-card" data-reveal>
+        <h3>Afklarende samtale</h3>
+        <p>
+          Hvis du er usikker på, hvad der er det rigtige for dig, kan du starte med en afklarende samtale.
+          Det er en mulighed til at mødes, at I kan høre hinanden, og til at finde ud af,
+          hvordan vi bedst kan arbejde sammen.
+        </p>
+      </div>
+
+      <div class="practical-card" data-reveal>
+        <h3>Sessionslængde</h3>
+        <p>
+          En session varer typisk 60–90 minutter. De fleste oplever, at sessioner med hypnoseterapi
+          virker mest effektivt som en serie på 3-5 gange. Terapeutiske samtaler kan være enkelte
+          eller løbende.
+        </p>
+      </div>
+
+      <div class="practical-card" data-reveal>
+        <h3>Online eller in-person</h3>
+        <p>
+          Du kan mødes med mig i mine behandlerlokaler i Frederikssund eller online via video.
+          Begge formats virker lige godt. Vælg det, der passer bedst til dig.
+        </p>
+      </div>
+
+      <div class="practical-card" data-reveal>
+        <h3>Betingelser</h3>
+        <p>
+          Jeg arbejder med tillid og åbenhed. Hvis du ikke føler jer tryg ved hypnoseterapi
+          eller blot gerne vil have samtale i stedet, er det helt i orden.
+          Vi kan altid justere efter dine behov.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

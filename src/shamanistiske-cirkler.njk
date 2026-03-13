@@ -1,0 +1,450 @@
+---
+layout: base.njk
+title: "Shamanistiske Cirkler — Indre Kald og Kraft"
+description: "Shamanistiske cirkler i Frederikssund. Forbind med naturens kraft og dit inderste selv gennem ritual, sang og fællesskab."
+ogTitle: "Shamanistiske Cirkler — Indre Kald og Kraft"
+ogDescription: "Forbind med naturens kraft og dit inderste selv. Shamanistiske cirkler ved Sabine Lindeberg."
+jsonLd: |
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Shamanistiske Cirkler — Ritual og Naturvisdom",
+    "description": "Shamanistiske cirkler i Frederikssund. Forbind med naturens kraft og dit inderste selv.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Indre Kald og Kraft — Sabine Lindeberg",
+      "url": "https://sabinelindeberg.dk",
+      "telephone": "+4541120149",
+      "email": "sabinelindeberg@hotmail.com"
+    },
+    "image": "https://sabinelindeberg.dk/assets/materiale/sabine-natur.jpg",
+    "areaServed": "Frederikssund, Denmark"
+  }
+extraHead: |
+  <style>
+  /* ========== BUTTONS ========== */
+  .btn {
+    display: inline-block;
+    padding: 15px 36px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--petrol);
+  }
+
+  .btn-gold:hover {
+    background: var(--gold-light);
+    color: var(--petrol);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+  }
+
+  .btn-teal {
+    background: var(--teal);
+    color: #FFFFFF;
+  }
+
+  .btn-teal:hover {
+    background: var(--teal-light);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+  }
+
+  /* ========== SECTION LABELS ========== */
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background: var(--petrol);
+    overflow: hidden;
+    padding-top: 72px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('/assets/materiale/sabine-natur.jpg') center/cover no-repeat;
+    opacity: 0.15;
+    filter: blur(1px);
+  }
+
+  .hero-gradient {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 250px;
+    background: linear-gradient(to top, var(--petrol), transparent);
+  }
+
+  .hero-swoosh {
+    position: absolute;
+    bottom: 15%;
+    left: -5%;
+    right: -5%;
+    z-index: 1;
+    opacity: 0.35;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    text-align: center;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 62px);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 23px);
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+    max-width: 700px;
+  }
+
+  /* ========== INTRO ========== */
+  .intro {
+    padding: 100px 0;
+    background: var(--sand);
+  }
+
+  .intro-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .intro h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-style: italic;
+    margin-bottom: 28px;
+    color: var(--petrol);
+  }
+
+  .intro p {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  /* ========== CONTENT SECTIONS ========== */
+  .content-section {
+    padding: 80px 0;
+    background: var(--white);
+  }
+
+  .content-section:nth-child(even) {
+    background: var(--sand-light);
+  }
+
+  .content-section-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .content-text h2 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-style: italic;
+    color: var(--petrol);
+    margin-bottom: 24px;
+  }
+
+  .content-text p {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .content-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .list-item::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 10px;
+  }
+
+  .content-image {
+    position: relative;
+  }
+
+  .content-image img {
+    border-radius: var(--radius);
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+
+  .content-image::after {
+    content: '';
+    position: absolute;
+    bottom: -12px; right: -12px;
+    width: 100%; height: 100%;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: var(--radius);
+    z-index: -1;
+  }
+
+  /* ========== CTA SECTION ========== */
+  .cta-section {
+    padding: 100px 0;
+    background: var(--white);
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-style: italic;
+    margin-bottom: 18px;
+    color: var(--petrol);
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    color: var(--text);
+    max-width: 520px;
+    margin: 0 auto 36px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 960px) {
+    .content-section-inner { grid-template-columns: 1fr; text-align: center; }
+    .content-list { align-items: center; }
+  }
+
+  @media (max-width: 680px) {
+    .cta-buttons { flex-direction: column; align-items: center; }
+    .content-section-inner { gap: 40px; }
+  }
+
+  /* FE6: View Transitions */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: vt-fade-out 0.25s ease; }
+  ::view-transition-new(root) { animation: vt-fade-in 0.25s ease; }
+  @keyframes vt-fade-out { to { opacity: 0; } }
+  @keyframes vt-fade-in { from { opacity: 0; } }
+
+  /* FE3: CSS @property gradient animation */
+  @property --grad-angle {
+    syntax: '<angle>';
+    initial-value: 135deg;
+    inherits: false;
+  }
+  @keyframes gradient-shift {
+    0%   { --grad-angle: 135deg; }
+    50%  { --grad-angle: 225deg; }
+    100% { --grad-angle: 135deg; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-gold.gradient-animated {
+      animation: gradient-shift 6s ease-in-out infinite;
+      background: linear-gradient(var(--grad-angle), var(--gold), #B8941E, var(--gold-light));
+      background-size: 200% 200%;
+    }
+  }
+  </style>
+---
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-gradient"></div>
+
+  <svg class="hero-swoosh" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 80 C300 20, 600 100, 900 40 C1100 0, 1300 60, 1500 30" stroke="#D4AF37" stroke-width="2" fill="none"/>
+    <path d="M0 90 C350 30, 650 110, 950 50 C1150 10, 1350 70, 1500 40" stroke="#D4AF37" stroke-width="1" fill="none" opacity="0.4"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-label">Fællesskab, ritual og naturvisdom</span>
+      <h1>Shamanistiske Cirkler</h1>
+      <p class="hero-tagline">Forbind med naturens kraft og dit inderste selv</p>
+      <a href="/kontakt/" class="btn btn-gold gradient-animated">Book en samtale</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INTRO ========== -->
+<section class="intro">
+  <div class="container">
+    <div class="intro-inner" data-reveal>
+      <span class="section-label">Hvad er shamanistiske cirkler</span>
+      <h2>I cirklerne arbejder vi med naturens visdom</h2>
+      <p>
+        Shamanistiske cirkler er rituelle møder, hvor vi samles i menneskers kraft og naturen omkring os.
+        Det handler ikke om at skulle tro på særlige ting — men om at være til stede,
+        at mærke og at forbinde dig med det, der er større end dig selv.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHAT CIRCLES OFFER ========== -->
+<section class="content-section">
+  <div class="container">
+    <div class="content-section-inner" data-reveal>
+      <div class="content-text">
+        <span class="section-label">Hvad foregår i cirklerne</span>
+        <h2>Meditation, kraftsang og ritual</h2>
+        <p>
+          Hver cirkel er bygget omkring forskellige elementer. Det kan være:
+        </p>
+        <div class="content-list">
+          <div class="list-item">Meditation og nærvær</div>
+          <div class="list-item">Kraftsang og lyd</div>
+          <div class="list-item">Ritualer, der forbinder os til døgnets eller årets cyklusser</div>
+          <div class="list-item">Deling og lytten uden dom</div>
+          <div class="list-item">Arbejde med elementer, farver og symboler</div>
+          <div class="list-item">Forbindelse til naturens visdom</div>
+        </div>
+        <p style="margin-top: 24px;">
+          Du er aldrig presset til at gøre noget, du ikke føler dig tryg ved.
+          Hvis du gerne vil sidde stille og bare være til stede, er det helt i orden.
+        </p>
+      </div>
+      <div class="content-image">
+        <img src="/assets/materiale/sabine-natur.jpg" alt="Shamanistisk cirkel i naturen" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHO IT'S FOR ========== -->
+<section class="content-section">
+  <div class="container">
+    <div class="content-section-inner" data-reveal>
+      <div class="content-image">
+        <img src="/assets/materiale/sabine-sne-portrait.jpg" alt="Sabine Lindeberg ved ritual" loading="lazy">
+      </div>
+      <div class="content-text">
+        <span class="section-label">Hvem er det for</span>
+        <h2>Hvis du søger forbindelse og fællesskab</h2>
+        <p>
+          Shamanistiske cirkler er for dig, hvis du:
+        </p>
+        <div class="content-list">
+          <div class="list-item">Ønsker at forbinde dig med noget større end dig selv</div>
+          <div class="list-item">Gerne har strukturerede rituelle møder</div>
+          <div class="list-item">Værdsætter fællesskab og at være med andre mennesker</div>
+          <div class="list-item">Søger at arbejde med naturens energier og cyclus</div>
+          <div class="list-item">Gerne bruger sang og lyd som del af healing</div>
+          <div class="list-item">Er open minded uden at skulle "tro på" noget særligt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== POWER AND PURPOSE ========== -->
+<section class="content-section">
+  <div class="container">
+    <div class="content-section-inner" data-reveal>
+      <div class="content-text">
+        <span class="section-label">Kraften i cirklerne</span>
+        <h2>Hvorfor rituel og fællesskab virker</h2>
+        <p>
+          Mennesker har arbejdet i cirkler i tusinder af år. Der er en særlig kraft i at samles omkring
+          noget fælles — en intention, en celebration, en sorg, eller bare et ønske om at være til stede sammen.
+        </p>
+        <p>
+          Når vi synger sammen, sidder stille sammen, eller deler noget svært — uden at skulle have det i orden —
+          sker der noget magisk. Vi føler os mindre alene. Vi forbinder med vores egen kraft. Vi bliver påmindet
+          om, at vi er del af noget større.
+        </p>
+        <p>
+          Det handler ikke om at skulle tro på særlige ting. Det handler bare om at være til stede,
+          med åbenhed og tillid til processen.
+        </p>
+      </div>
+      <div class="content-image">
+        <img src="/assets/materiale/sabine-smile.jpg" alt="Tillid og åbenhed" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA SECTION ========== -->
+<section class="cta-section">
+  <div class="container" data-reveal>
+    <span class="section-label">Tag første skridt</span>
+    <h2>Klar til at forbinde?</h2>
+    <p>Hvis du søger fællesskab, ritual og forbindelse til naturens kraft — ring <a href="tel:+4541120149" style="color: var(--gold); text-decoration: none; font-weight: 600;">+45 4112 0149</a> eller skriv om kommende cirkler.</p>
+    <div class="cta-buttons">
+      <a href="/kontakt/" class="btn btn-gold">Kom i cirkel</a>
+      <a href="tel:+4541120149" class="btn btn-teal">Ring direkte</a>
+    </div>
+  </div>
+</section>
