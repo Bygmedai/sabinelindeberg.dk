@@ -1,0 +1,24 @@
+{#
+  nav.njk — Sabine Lindeberg navigation partial (WP F-6)
+  Config from _data/site.json:
+    site.logo.image/alt/text — Image-based logo
+    site.nav.links[]         — Array of {text, url}
+    site.nav.cta             — {text, url} for CTA button
+#}
+<nav>
+  <div class="container">
+    <a href="/" class="nav-brand">
+      <img src="{{ site.logo.image }}" alt="{{ site.logo.alt }}" class="nav-logo-img">
+      <span class="nav-logo-text">{{ site.logo.text | safe }}</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      {%- for link in site.nav.links %}
+      <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+      {%- endfor %}
+      <li><a href="{{ site.nav.cta.url }}" class="nav-cta">{{ site.nav.cta.text }}</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>

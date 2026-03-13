@@ -1,0 +1,87 @@
+/* ============================================================
+   Sabine Lindeberg Skin — Lag 4: Kundespecifikt design
+   ============================================================
+   Petrol/gold palette med lys baggrund.
+   Overrider base.css :root tokens.
+   ============================================================ */
+
+:root {
+  /* Primære farver */
+  --black: #FFFFFF;
+  --black-light: #F7F4EF;
+  --pink: #D4AF37;
+  --pink-light: #E8CC6E;
+  --orange: #D4AF37;
+  --orange-hover: #E8CC6E;
+
+  /* Sabine-specifikke tokens */
+  --petrol: #1E3D40;
+  --petrol-deep: #162E30;
+  --petrol-rgb: 30, 61, 64;
+  --gold: #D4AF37;
+  --gold-light: #E8CC6E;
+  --gold-soft: rgba(212, 175, 55, 0.12);
+  --sand: #F1ECE4;
+  --sand-light: #F7F4EF;
+  --teal: #2E5A57;
+  --teal-light: #3A706C;
+
+  /* Gradienter */
+  --gradient: linear-gradient(135deg, #D4AF37, #2E5A57);
+  --gradient-subtle: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(46,90,87,0.15));
+
+  /* Tekst — mørk tekst på lys baggrund */
+  --text: #1A1A1A;
+  --text-muted: #333333;
+  --text-dim: #666666;
+
+  /* UI */
+  --nav-border: rgba(212, 175, 55, 0.2);
+  --radius: 12px;
+  --max-w: 1100px;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Compat aliases */
+  --bg: #FFFFFF;
+  --surface: #F7F4EF;
+  --accent: #D4AF37;
+  --accent-light: #E8CC6E;
+  --accent-bg: rgba(212,175,55,0.1);
+  --navy: #1E3D40;
+  --navy-light: #2E5A57;
+  --warm: #D4AF37;
+  --white: #FFFFFF;
+  --blue: #F7F4EF;
+  --green: #2E5A57;
+  --grey: #666666;
+  --red: #C44536;
+
+  /* Font override */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Jost', -apple-system, sans-serif;
+}
+
+/* Light theme body override */
+body {
+  background: var(--white);
+  color: var(--text);
+  font-size: 18px;
+}
+
+/* Headings use petrol */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--petrol);
+}
+
+/* Links */
+a {
+  color: var(--teal);
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--gold);
+}

@@ -1,0 +1,154 @@
+/* ============================================================
+   BygMedAI Base CSS — Lag 1: Reset + Tokens + Utilities
+   ============================================================
+   Del af 4-lags CSS-arkitektur (Konsolideringsstrategi v3.1):
+     Lag 1: base.css (dette fil) — 100% delt
+     Lag 2: Partials (nav, footer, head)
+     Lag 3: Layouts (article, landing, about)
+     Lag 4: Skin (kundespecifik)
+
+   Overrideable: Alle :root custom properties kan overrides
+   i et kundespecifikt skin.css.
+   ============================================================ */
+
+/* ---------- CSS RESET ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- DESIGN TOKENS (shared defaults) ---------- */
+/* These are safe fallbacks. The skin.css (Lag 4) overrides them
+   with site-specific values. If skin.css fails to load, the site
+   still renders with these defaults.
+   Fonts are set from site.json via head.njk Google Fonts link. */
+:root {
+  /* Typografi */
+  --font-display: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+
+  /* Farver (defaults — overridden af skin) */
+  --black: #0A0C12;
+  --black-light: #12151D;
+  --pink: #C4A0A0;
+  --pink-light: #D4B0B0;
+  --orange: #D4956A;
+  --orange-hover: #E0A57A;
+  --gradient: linear-gradient(135deg, #C4A0A0, #D4956A);
+  --gradient-subtle: linear-gradient(135deg, rgba(196,160,160,0.15), rgba(212,149,106,0.15));
+  --text: #F0F2F5;
+  --text-muted: #9CA8B7;
+  --text-dim: #6B7580;
+  --nav-border: rgba(219, 82, 39, 0.15);
+
+  /* Layout */
+  --radius: 12px;
+  --max-w: 1100px;
+
+  /* Compat aliases (deprecated — brug primære navne) */
+  --bg: var(--black);
+  --surface: var(--black-light);
+  --accent: var(--orange);
+  --accent-light: var(--orange-hover);
+  --accent-bg: rgba(212,149,106,0.1);
+  --navy: var(--black);
+  --navy-light: var(--black-light);
+  --warm: var(--orange);
+  --white: #FFFFFF;
+  --blue: var(--black-light);
+  --green: #38A169;
+  --grey: var(--text-dim);
+  --red: #EF4444;
+}
+
+/* ---------- UTILITIES ---------- */
+
+/* Layout container */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Screen reader only — visually hidden but accessible */
+.sr-only,
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- SCROLL REVEAL ANIMATION BASE ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.stagger-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- RESPONSIVE BASE ---------- */
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .stagger-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

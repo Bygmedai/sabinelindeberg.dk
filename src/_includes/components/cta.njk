@@ -1,0 +1,47 @@
+{#
+  CTA Button Macros (WP F-3)
+
+  Usage:
+    {% from "components/cta.njk" import ctaPrimary, ctaOutline, ctaOutlineWhite, ctaSecondary %}
+    {{ ctaPrimary("Book gratis briefing", "/afklaring/", "hero_afklaring") }}
+    {{ ctaOutline("Se priser", "/priser/") }}
+    {{ ctaOutlineWhite("Se mit arbejde", "#portfolio") }}
+    {{ ctaSecondary("Se priser ↓", "#priser") }}
+
+  Parameters:
+    text     — Button label
+    url      — Link destination
+    ga4Label — (optional) GA4 event label for conversion tracking
+    attrs    — (optional) Extra HTML attributes string
+#}
+
+{% macro ctaPrimary(text, url, ga4Label, attrs) -%}
+<a href="{{ url }}" class="btn-primary"{% if ga4Label %} onclick="gtag('event','cta_click',{event_category:'conversion',event_label:'{{ ga4Label }}'})"{% endif %}{% if attrs %} {{ attrs }}{% endif %}>{{ text }}</a>
+{%- endmacro %}
+
+{% macro ctaOutline(text, url, ga4Label, attrs) -%}
+<a href="{{ url }}" class="btn-outline"{% if ga4Label %} onclick="gtag('event','cta_click',{event_category:'conversion',event_label:'{{ ga4Label }}'})"{% endif %}{% if attrs %} {{ attrs }}{% endif %}>{{ text }}</a>
+{%- endmacro %}
+
+{% macro ctaOutlineWhite(text, url, ga4Label, attrs) -%}
+<a href="{{ url }}" class="btn-outline-white"{% if ga4Label %} onclick="gtag('event','cta_click',{event_category:'conversion',event_label:'{{ ga4Label }}'})"{% endif %}{% if attrs %} {{ attrs }}{% endif %}>{{ text }}</a>
+{%- endmacro %}
+
+{% macro ctaSecondary(text, url, ga4Label, attrs) -%}
+<a href="{{ url }}" class="btn-secondary"{% if ga4Label %} onclick="gtag('event','cta_click',{event_category:'conversion',event_label:'{{ ga4Label }}'})"{% endif %}{% if attrs %} {{ attrs }}{% endif %}>{{ text }}</a>
+{%- endmacro %}
+
+{#
+  CTA Section macro — full-width bottom CTA block
+  Usage:
+    {{ ctaSection("Klar til at opgradere?", "Vi gennemgår dine behov.", "/afklaring/", "Book gratis briefing", "final_afklaring") }}
+#}
+{% macro ctaSection(heading, description, url, buttonText, ga4Label) -%}
+<section class="cta-section">
+  <div class="container" data-reveal>
+    <h2>{{ heading | safe }}</h2>
+    <p>{{ description }}</p>
+    {{ ctaPrimary(buttonText, url, ga4Label) }}
+  </div>
+</section>
+{%- endmacro %}

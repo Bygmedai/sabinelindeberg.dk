@@ -1,0 +1,61 @@
+{
+  "name": "Indre Kald og Kraft",
+  "domain": "sabinelindeberg.dk",
+  "url": "https://sabinelindeberg.dk",
+  "lang": "da",
+  "locale": "da_DK",
+  "email": "sabinelindeberg@hotmail.com",
+  "phone": "+45 4112 0149",
+  "ga4": "G-1T736SKWVT",
+
+  "logo": {
+    "image": "/assets/materiale/logo-tree.png",
+    "alt": "Indre Kald og Kraft logo",
+    "text": "Indre Kald<br>og Kraft"
+  },
+
+  "fonts": {
+    "display": "Cormorant Garamond",
+    "body": "Jost",
+    "url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap"
+  },
+
+  "skin": {
+    "file": "sabinelindeberg.css"
+  },
+
+  "og": {
+    "defaultImage": "/assets/materiale/hero-banner.png",
+    "imageWidth": "1200",
+    "imageHeight": "630"
+  },
+
+  "nav": {
+    "links": [
+      { "text": "Forside", "url": "/" },
+      { "text": "Hypnoseterapi", "url": "/hypnoseterapi/" },
+      { "text": "Terapeutisk Samtale", "url": "/terapeutisk-samtale/" },
+      { "text": "Shamanistiske Cirkler", "url": "/shamanistiske-cirkler/" },
+      { "text": "Om Sabine", "url": "/om-sabine/" }
+    ],
+    "cta": {
+      "text": "Book en samtale",
+      "url": "/kontakt/"
+    }
+  },
+
+  "footer": {
+    "description": "Hypnoseterapi, terapeutisk samtale og shamanistiske cirkler. Et trygt rum til klarhed, retning og indre kraft.",
+    "links": [
+      { "text": "Hypnoseterapi", "url": "/hypnoseterapi/" },
+      { "text": "Terapeutisk samtale", "url": "/terapeutisk-samtale/" },
+      { "text": "Shamanistiske cirkler", "url": "/shamanistiske-cirkler/" },
+      { "text": "Om Sabine", "url": "/om-sabine/" },
+      { "text": "Booking & Kontakt", "url": "/kontakt/" }
+    ],
+    "contact": {
+      "name": "Sabine Lindeberg",
+      "location": "Frederikssund"
+    }
+  }
+}

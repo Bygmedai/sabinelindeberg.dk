@@ -5,10 +5,15 @@
   "scripts": {
     "test": "npx playwright test tests/ --reporter=list",
     "test:serve": "npx http-server . -p 8080 -s &",
-    "test:screenshots": "npx playwright test tests/ --reporter=list --grep='Screenshots'"
+    "test:screenshots": "npx playwright test tests/ --reporter=list --grep='Screenshots'",
+    "build": "npx @11ty/eleventy",
+    "serve": "npx @11ty/eleventy --serve"
   },
   "dependencies": {
     "@playwright/test": "^1.58.2",
     "http-server": "^14.1.1"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
   }
 }

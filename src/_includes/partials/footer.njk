@@ -1,0 +1,46 @@
+{#
+  footer.njk — Sabine Lindeberg footer partial (WP F-6)
+  Config from _data/site.json:
+    site.logo.image/text     — Image-based logo
+    site.name                — Site name for copyright
+    site.footer.description  — Brand description
+    site.footer.links[]      — Array of {text, url}
+    site.footer.contact      — {name, location}
+    site.phone, site.email   — Contact details
+#}
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <img src="{{ site.logo.image }}" alt="{{ site.name }}" style="height: 40px;">
+          <span>{{ site.name }}</span>
+        </div>
+        <p>{{ site.footer.description }}</p>
+      </div>
+      <div>
+        <h4>Sider</h4>
+        <ul class="footer-links">
+          {%- for link in site.footer.links %}
+          <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <p class="footer-contact-item">{{ site.footer.contact.name }}</p>
+        <p class="footer-contact-item">{{ site.footer.contact.location }}</p>
+        <p class="footer-contact-item">
+          <a href="tel:{{ site.phone | replace(' ', '') }}" style="color: rgba(255,255,255,0.65);">{{ site.phone }}</a>
+        </p>
+        <p class="footer-contact-item">
+          <a href="mailto:{{ site.email }}" style="color: rgba(255,255,255,0.65);">{{ site.email }}</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 {{ site.name }}. Alle rettigheder forbeholdes.</span>
+      <span class="bygmedai-badge">Bygget med ♥ af <a href="https://bygmedai.dk" target="_blank">BygMedAI</a></span>
+    </div>
+  </div>
+</footer>

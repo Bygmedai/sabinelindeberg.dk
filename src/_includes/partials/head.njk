@@ -1,0 +1,47 @@
+{#
+  head.njk — Shared <head> partial (WP F-2)
+  All values come from _data/site.json:
+    site.name        — Site name (used in <title>, OG tags)
+    site.domain      — Domain without protocol
+    site.url         — Full URL with https://
+    site.lang        — HTML lang attribute
+    site.locale      — OG locale (e.g. da_DK)
+    site.ga4         — GA4 Measurement ID (omit to disable)
+    site.fonts.url   — Google Fonts URL
+    site.og.*        — Default OG image settings
+  Per-page frontmatter: title, description, ogTitle, ogDescription, ogImage, noindex, extraHead
+#}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% if site.ga4 %}
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga4 }}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.ga4 }}');</script>
+{% endif %}
+<title>{{ title }} — {{ site.name }}</title>
+<meta name="description" content="{{ description }}">
+<meta property="og:title" content="{{ ogTitle or title }} — {{ site.name }}">
+<meta property="og:description" content="{{ ogDescription or description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}{{ ogImage or site.og.defaultImage }}">
+<meta property="og:image:width" content="{{ site.og.imageWidth }}">
+<meta property="og:image:height" content="{{ site.og.imageHeight }}">
+<meta property="og:locale" content="{{ site.locale }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ ogTitle or title }} — {{ site.name }}">
+<meta name="twitter:description" content="{{ ogDescription or description }}">
+<meta name="twitter:image" content="{{ site.url }}{{ ogImage or site.og.defaultImage }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% if noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{ site.fonts.url }}" rel="stylesheet">
+<!-- View Transitions API -->
+<meta name="view-transition" content="same-origin">
+<!-- Lag 1: Base CSS (reset, tokens, utilities) — WP F-1 -->
+<link rel="stylesheet" href="/assets/css/base.css">
+<!-- Lag 4: Skin CSS (kundespecifik) — WP F-5 -->
+{% if site.skin.file %}<link rel="stylesheet" href="/assets/css/skins/{{ site.skin.file }}">{% endif %}
+{{ layoutHead | safe }}
+{{ extraHead | safe }}
