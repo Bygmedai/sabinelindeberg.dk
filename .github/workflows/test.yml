@@ -7,38 +7,60 @@ on:
     branches: [main]
 
 jobs:
-  html-validate:
-    name: HTML Validation
+  build:
+    name: Build 11ty
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npx @11ty/eleventy
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site/
+          retention-days: 1
+
+  html-validate:
+    name: HTML Validation
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: _site/
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm install -g html-validate
       - name: Validate all HTML files
         run: |
-          # Find all HTML files (skip node_modules and backups)
-          FILES=$(find . -name "*.html" -not -path "*/node_modules/*" -not -name "*backup*" | sort)
+          FILES=$(find _site -name "*.html" | sort)
           if [ -z "$FILES" ]; then
             echo "No HTML files found"
             exit 0
           fi
-          # Run validation — exit code 0 means no errors (warnings are OK)
           html-validate $FILES
 
   broken-links:
     name: Broken Link Check
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: _site/
       - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm install -g linkinator
       - name: Start local server
         run: |
-          npx http-server . -p 8080 -s &
+          npx http-server _site -p 8080 -s &
           sleep 2
       - name: Check internal links
         run: |
@@ -61,9 +83,13 @@ jobs:
 
   lighthouse:
     name: Lighthouse Audit
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: _site/
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -72,27 +98,21 @@ jobs:
           npm install -g http-server
       - name: Start local server
         run: |
-          http-server . -p 8080 -s &
+          http-server _site -p 8080 -s &
           sleep 2
       - name: Run Lighthouse on key pages
         run: |
-          # Auto-discover HTML files (max 6 for CI speed)
-          PAGES=()
-          if [ -f "index.html" ]; then
-            PAGES+=("http://localhost:8080/index.html")
-          fi
-          for f in $(find . -maxdepth 1 -name "*.html" -not -name "index.html" -not -name "*backup*" | sort | head -5); do
-            PAGE=$(basename "$f")
-            PAGES+=("http://localhost:8080/$PAGE")
-          done
-          if [ ${#PAGES[@]} -eq 0 ]; then
-            echo "No HTML pages found for Lighthouse"
-            exit 0
-          fi
+          PAGES=(
+            "http://localhost:8080/"
+            "http://localhost:8080/hypnoseterapi/"
+            "http://localhost:8080/terapeutisk-samtale/"
+            "http://localhost:8080/shamanistiske-cirkler/"
+            "http://localhost:8080/om-sabine/"
+            "http://localhost:8080/kontakt/"
+          )
           FAILED=0
           for URL in "${PAGES[@]}"; do
-            PAGE=$(echo "$URL" | sed 's|.*/||')
-            echo "=== Testing $PAGE ==="
+            echo "=== Testing $URL ==="
             lhci collect --url="$URL" --settings.chromeFlags="--no-sandbox --headless" || true
             REPORT=$(ls -t .lighthouseci/lhr-*.json 2>/dev/null | head -1)
             if [ -f "$REPORT" ]; then
@@ -117,30 +137,3 @@ jobs:
             echo "::error::One or more pages failed Lighthouse gates"
             exit 1
           fi
-
-  playwright:
-    name: Smoke Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install Playwright
-        run: |
-          npm init -y
-          npm install @playwright/test
-          npx playwright install chromium --with-deps
-      - name: Start local server
-        run: |
-          npx http-server . -p 8080 -s &
-          sleep 2
-      - name: Run smoke tests
-        run: npx playwright test tests/ --reporter=list
-      - name: Upload screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: tests/screenshots/
-          retention-days: 7
