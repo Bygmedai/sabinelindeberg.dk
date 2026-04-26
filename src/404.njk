@@ -1,0 +1,77 @@
+---
+layout: base.njk
+permalink: /404.html
+title: "Siden blev ikke fundet"
+description: "Siden kunne ikke findes. Gå til forsiden eller kontakt Sabine Lindeberg."
+noindex: true
+extraHead: |
+  <style>
+  .nf-wrap {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px 80px;
+    text-align: center;
+    background: var(--sand);
+  }
+  .nf-inner {
+    max-width: 560px;
+  }
+  .nf-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .nf-inner h1 {
+    font-size: clamp(36px, 6vw, 56px);
+    font-style: italic;
+    color: var(--petrol);
+    margin-bottom: 18px;
+  }
+  .nf-inner p {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+  .nf-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .nf-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  .nf-btn.primary { background: var(--gold); color: var(--petrol); }
+  .nf-btn.primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .nf-btn.secondary { border: 1px solid var(--teal); color: var(--teal); }
+  .nf-btn.secondary:hover { background: rgba(46,90,87,0.06); }
+  </style>
+---
+
+<section class="nf-wrap">
+  <div class="nf-inner">
+    <span class="nf-eyebrow">404</span>
+    <h1>Siden blev ikke fundet</h1>
+    <p>
+      Den side du leder efter findes ikke længere — eller har måske aldrig gjort.
+      Gå tilbage til forsiden eller find vej via menuen.
+    </p>
+    <div class="nf-actions">
+      <a href="/" class="nf-btn primary">Til forsiden</a>
+      <a href="/kontakt/" class="nf-btn secondary">Kontakt Sabine</a>
+    </div>
+  </div>
+</section>

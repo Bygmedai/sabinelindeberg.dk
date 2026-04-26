@@ -7,18 +7,24 @@ ogDescription: "Forbind med naturens kraft og dit inderste selv. Shamanistiske c
 jsonLd: |
   {
     "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Shamanistiske Cirkler — Ritual og Naturvisdom",
-    "description": "Shamanistiske cirkler i Frederikssund. Forbind med naturens kraft og dit inderste selv.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "Indre Kald og Kraft — Sabine Lindeberg",
-      "url": "https://sabinelindeberg.dk",
-      "telephone": "+4541120149",
-      "email": "sabinelindeberg@hotmail.com"
-    },
-    "image": "https://sabinelindeberg.dk/assets/materiale/sabine-natur.jpg",
-    "areaServed": "Frederikssund, Denmark"
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "Shamanistiske Cirkler — Ritual og Naturvisdom",
+        "description": "Shamanistiske cirkler i Frederikssund. Forbind med naturens kraft og dit inderste selv.",
+        "serviceType": "Shamanistisk praksis",
+        "provider": { "@id": "https://sabinelindeberg.dk/#business" },
+        "image": "https://sabinelindeberg.dk/assets/materiale/sabine-natur.jpg",
+        "areaServed": "Frederikssund, Denmark"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Forside", "item": "https://sabinelindeberg.dk/" },
+          { "@type": "ListItem", "position": 2, "name": "Shamanistiske cirkler", "item": "https://sabinelindeberg.dk/shamanistiske-cirkler/" }
+        ]
+      }
+    ]
   }
 extraHead: |
   <style>
@@ -376,7 +382,7 @@ extraHead: |
         </p>
       </div>
       <div class="content-image">
-        <img src="/assets/materiale/sabine-natur.jpg" alt="Shamanistisk cirkel i naturen" loading="lazy">
+        <img src="/assets/materiale/sabine-natur.jpg" alt="Shamanistisk cirkel i naturen" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -387,7 +393,7 @@ extraHead: |
   <div class="container">
     <div class="content-section-inner" data-reveal>
       <div class="content-image">
-        <img src="/assets/materiale/sabine-sne-portrait.jpg" alt="Sabine Lindeberg ved ritual" loading="lazy">
+        <img src="/assets/materiale/sabine-sne-portrait.jpg" alt="Sabine Lindeberg ved ritual" loading="lazy" decoding="async">
       </div>
       <div class="content-text">
         <span class="section-label">Hvem er det for</span>
@@ -430,7 +436,7 @@ extraHead: |
         </p>
       </div>
       <div class="content-image">
-        <img src="/assets/materiale/sabine-smile.jpg" alt="Tillid og åbenhed" loading="lazy">
+        <img src="/assets/materiale/sabine-smile.jpg" alt="Tillid og åbenhed" loading="lazy" decoding="async">
       </div>
     </div>
   </div>

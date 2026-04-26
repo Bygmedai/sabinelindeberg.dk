@@ -7,20 +7,19 @@ ogDescription: "Skriv, ring eller book direkte online. Kontakt Sabine Lindeberg.
 jsonLd: |
   {
     "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "mainEntity": {
-      "@type": "LocalBusiness",
-      "name": "Indre Kald og Kraft — Sabine Lindeberg",
-      "url": "https://sabinelindeberg.dk",
-      "telephone": "+4541120149",
-      "email": "sabinelindeberg@hotmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Frederikssund",
-        "addressCountry": "DK"
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "mainEntity": { "@id": "https://sabinelindeberg.dk/#business" }
       },
-      "areaServed": "Frederikssund, Denmark"
-    }
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Forside", "item": "https://sabinelindeberg.dk/" },
+          { "@type": "ListItem", "position": 2, "name": "Booking & Kontakt", "item": "https://sabinelindeberg.dk/kontakt/" }
+        ]
+      }
+    ]
   }
 extraHead: |
   <style>
@@ -209,6 +208,38 @@ extraHead: |
     box-shadow: 0 8px 32px rgba(0,0,0,0.06);
   }
 
+  .form-intro {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .form-status {
+    margin-top: 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    min-height: 1.5em;
+  }
+
+  .form-status.is-success {
+    color: var(--teal);
+  }
+
+  .form-status.is-error {
+    color: var(--red);
+  }
+
+  /* Honeypot — visually hidden but still rendered so bots see it. */
+  .hp-field {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   .form-group {
     margin-bottom: 24px;
   }
@@ -340,27 +371,64 @@ extraHead: |
   </style>
 extraScripts: |
   <script>
-  // Simple form handling with mailto
-  const form = document.querySelector('.contact-form form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const message = document.getElementById('message').value;
+  (function () {
+    var form = document.querySelector('.contact-form form');
+    if (!form) return;
 
-      const subject = encodeURIComponent('Ny besked fra: ' + name);
-      const body = encodeURIComponent(
+    var status = document.getElementById('formStatus');
+    var submitBtn = form.querySelector('button[type="submit"]');
+
+    function announce(msg, isError) {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.toggle('is-error', !!isError);
+      status.classList.toggle('is-success', !isError);
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Honeypot — bots fill hidden fields, humans don't.
+      var hp = form.querySelector('input[name="company"]');
+      if (hp && hp.value) {
+        announce('Tak. Beskeden blev modtaget.', false);
+        form.reset();
+        return;
+      }
+
+      // Native validation first.
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var name = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var message = document.getElementById('message').value.trim();
+
+      var subject = encodeURIComponent('Ny besked fra: ' + name);
+      var body = encodeURIComponent(
         'Navn: ' + name + '\n' +
         'Email: ' + email + '\n' +
         'Telefon: ' + phone + '\n' +
         '\nBesked:\n' + message
       );
 
+      // Open the user's mail client. We use _self (default) so the user
+      // returns to this page after sending — and we show a confirmation
+      // either way, so a popup-blocked mailto doesn't leave them in limbo.
       window.location.href = 'mailto:sabinelindeberg@hotmail.com?subject=' + subject + '&body=' + body;
+
+      announce('Tak — din emailklient åbner nu. Hvis ikke, ring '
+        + '+45 4112 0149 eller skriv til sabinelindeberg@hotmail.com.', false);
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sendt';
+      }
     });
-  }
+  })();
   </script>
 ---
 
@@ -393,54 +461,68 @@ extraScripts: |
           <div class="detail-block">
             <div class="detail-label">Telefon</div>
             <div class="detail-content">
-              <a href="tel:+4541120149">+45 4112 0149</a>
+              <a href="tel:{{ site.phoneE164 }}">{{ site.phone }}</a>
             </div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Email</div>
             <div class="detail-content">
-              <a href="mailto:sabinelindeberg@hotmail.com">sabinelindeberg@hotmail.com</a>
+              <a href="mailto:{{ site.email }}">{{ site.email }}</a>
             </div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Lokation</div>
-            <div class="detail-content">Frederikssund, Danmark</div>
+            <div class="detail-content">{{ site.address.locality }}, Danmark</div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Priser</div>
-            <div class="detail-content">Hypnoseterapi: 1.200 kr · Rygeafvænning: 2.800 kr</div>
+            <div class="detail-content">{{ site.prices.summary }}</div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Sessionslængde</div>
-            <div class="detail-content">60–90 minutter</div>
+            <div class="detail-content">{{ site.session.duration }}</div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Åbningstider</div>
+            <div class="detail-content">{{ site.openingHoursDisplay }}</div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Format</div>
-            <div class="detail-content">I Frederikssund eller online</div>
+            <div class="detail-content">{{ site.session.format }}</div>
           </div>
         </div>
       </div>
 
       <div class="contact-form">
         <h3 style="font-size: 20px; margin-bottom: 24px; color: var(--petrol);">Send en besked</h3>
-        <form>
+        <p id="formIntro" class="form-intro">
+          Felter markeret med <span aria-hidden="true">*</span><span class="sr-only">stjerne</span> er obligatoriske.
+          Beskeden åbnes i din emailklient — så du selv afsender og har en kopi.
+        </p>
+        <form aria-describedby="formIntro" novalidate>
           <div class="form-group">
-            <label for="name">Dit navn</label>
-            <input type="text" id="name" name="name" required>
+            <label for="name">Dit navn <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
           </div>
           <div class="form-group">
-            <label for="email">Din email</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Din email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
           </div>
           <div class="form-group">
             <label for="phone">Telefonnummer (valgfrit)</label>
-            <input type="tel" id="phone" name="phone">
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel">
           </div>
           <div class="form-group">
-            <label for="message">Din besked</label>
-            <textarea id="message" name="message" required></textarea>
+            <label for="message">Din besked <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <!-- Honeypot — visually hidden, off-screen, off-tab, ignored by users. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="company">Virksomhed (lad være tom)</label>
+            <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
           </div>
           <button type="submit" class="form-submit">Send besked</button>
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>

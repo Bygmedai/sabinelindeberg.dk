@@ -141,14 +141,72 @@ a {
   transform: translateY(0);
 }
 
+/* ---------- ACCESSIBILITY: SKIP LINK ---------- */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  z-index: 1000;
+  padding: 10px 16px;
+  background: var(--gold, #D4AF37);
+  color: var(--petrol, #1E3D40);
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--petrol, #1E3D40);
+  outline-offset: 2px;
+}
+
+/* ---------- ACCESSIBILITY: FOCUS-VISIBLE ---------- */
+:focus-visible {
+  outline: 2px solid var(--gold, #D4AF37);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove default outline only when :focus-visible is supported */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* ---------- RESPONSIVE BASE ---------- */
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   [data-reveal],
   .stagger-item {
     opacity: 1;
     transform: none;
     transition: none;
   }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- PRINT ---------- */
+@media print {
+  nav, footer, .skip-link, .hero-bg, .hero-gradient,
+  .hero-swoosh, .nature-parallax, .cta-section, .hamburger,
+  .gdpr-consent { display: none !important; }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  a { color: #000 !important; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+  h1, h2, h3 { color: #000 !important; page-break-after: avoid; }
+  img { max-width: 100% !important; page-break-inside: avoid; }
+  section { page-break-inside: avoid; }
 }

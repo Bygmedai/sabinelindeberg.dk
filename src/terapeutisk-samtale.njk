@@ -7,18 +7,24 @@ ogDescription: "Et sikkert rum til refleksion, livsafklaring og retning. Terapeu
 jsonLd: |
   {
     "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Terapeutisk Samtale — Refleksion og Livsafklaring",
-    "description": "Terapeutisk samtale i Frederikssund. Et sikkert rum til refleksion, livsafklaring og retning.",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "Indre Kald og Kraft — Sabine Lindeberg",
-      "url": "https://sabinelindeberg.dk",
-      "telephone": "+4541120149",
-      "email": "sabinelindeberg@hotmail.com"
-    },
-    "image": "https://sabinelindeberg.dk/assets/materiale/sabine-portrait.jpg",
-    "areaServed": "Frederikssund, Denmark"
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "Terapeutisk Samtale — Refleksion og Livsafklaring",
+        "description": "Terapeutisk samtale i Frederikssund. Et sikkert rum til refleksion, livsafklaring og retning.",
+        "serviceType": "Terapeutisk samtale",
+        "provider": { "@id": "https://sabinelindeberg.dk/#business" },
+        "image": "https://sabinelindeberg.dk/assets/materiale/sabine-portrait.jpg",
+        "areaServed": "Frederikssund, Denmark"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Forside", "item": "https://sabinelindeberg.dk/" },
+          { "@type": "ListItem", "position": 2, "name": "Terapeutisk samtale", "item": "https://sabinelindeberg.dk/terapeutisk-samtale/" }
+        ]
+      }
+    ]
   }
 extraHead: |
   <style>
@@ -373,7 +379,7 @@ extraHead: |
         </div>
       </div>
       <div class="content-image">
-        <img src="/assets/materiale/sabine-portrait.jpg" alt="Terapeutisk samtale" loading="lazy">
+        <img src="/assets/materiale/sabine-portrait.jpg" alt="Terapeutisk samtale" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -384,7 +390,7 @@ extraHead: |
   <div class="container">
     <div class="content-section-inner" data-reveal>
       <div class="content-image">
-        <img src="/assets/materiale/sabine-smile.jpg" alt="Sabine Lindeberg i møde" loading="lazy">
+        <img src="/assets/materiale/sabine-smile.jpg" alt="Sabine Lindeberg i møde" loading="lazy" decoding="async">
       </div>
       <div class="content-text">
         <span class="section-label">Sådan foregår det</span>
@@ -428,7 +434,7 @@ extraHead: |
         </p>
       </div>
       <div class="content-image">
-        <img src="/assets/materiale/sabine-sne-bred.jpg" alt="Rolig og tryg atmosfære" loading="lazy">
+        <img src="/assets/materiale/sabine-sne-bred.jpg" alt="Rolig og tryg atmosfære" loading="lazy" decoding="async">
       </div>
     </div>
   </div>

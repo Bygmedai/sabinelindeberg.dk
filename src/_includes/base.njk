@@ -79,6 +79,51 @@ nav .container {
 
 .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
 .hamburger span { display: block; width: 26px; height: 2px; background: var(--gold); border-radius: 2px; transition: var(--transition); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Active link indicator */
+.nav-links a[aria-current="page"] { color: var(--gold); }
+.nav-links a.nav-cta[aria-current="page"] { color: var(--petrol) !important; }
+
+/* ========== GDPR CONSENT BANNER ========== */
+.gdpr-consent {
+  position: fixed;
+  bottom: 16px; left: 16px; right: 16px;
+  z-index: 200;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  background: var(--petrol);
+  color: rgba(255,255,255,0.92);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  display: none;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.gdpr-consent.is-open { display: block; }
+.gdpr-consent p { margin: 0 0 12px; }
+.gdpr-consent a { color: var(--gold); text-decoration: underline; }
+.gdpr-consent-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.gdpr-btn {
+  flex: 1 1 auto;
+  padding: 10px 16px;
+  border: 1px solid rgba(212,175,55,0.5);
+  background: transparent;
+  color: rgba(255,255,255,0.92);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+.gdpr-btn:hover { border-color: var(--gold); }
+.gdpr-btn.is-primary { background: var(--gold); color: var(--petrol); border-color: var(--gold); }
+.gdpr-btn.is-primary:hover { background: var(--gold-light); }
 
 /* ========== GOLD SWOOSH DIVIDER ========== */
 .gold-swoosh {
@@ -213,11 +258,29 @@ footer h4 {
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Spring til hovedindhold</a>
+
 {% include "partials/nav.njk" %}
 
+<main id="main" tabindex="-1">
 {{ content | safe }}
+</main>
 
 {% include "partials/footer.njk" %}
+
+{% if site.ga4 %}
+<aside class="gdpr-consent" id="gdprConsent" role="dialog" aria-labelledby="gdprTitle" aria-describedby="gdprDesc">
+  <p id="gdprTitle"><strong>Cookies & analyse</strong></p>
+  <p id="gdprDesc">
+    Sitet bruger Google Analytics til anonym statistik. Du kan altid takke nej —
+    så indlæses sporing slet ikke. <a href="/kontakt/">Kontakt</a> hvis du har spørgsmål.
+  </p>
+  <div class="gdpr-consent-actions">
+    <button type="button" class="gdpr-btn" id="gdprDecline">Nej tak</button>
+    <button type="button" class="gdpr-btn is-primary" id="gdprAccept">Jeg accepterer</button>
+  </div>
+</aside>
+{% endif %}
 
 {% if jsonLd %}
 <script type="application/ld+json">{{ jsonLd | safe }}</script>
@@ -253,6 +316,69 @@ document.querySelectorAll('[data-stagger]').forEach(group => {
   }, { threshold: 0.15 });
   obs.observe(group);
 });
+
+// Accessible mobile nav toggle (replaces inline onclick)
+(function () {
+  var btn = document.getElementById('navToggle');
+  var menu = document.getElementById('navLinks');
+  if (!btn || !menu) return;
+
+  function setOpen(open) {
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Luk menu' : 'Åbn menu');
+    menu.classList.toggle('open', open);
+  }
+
+  btn.addEventListener('click', function () {
+    setOpen(btn.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+
+  // Close when a link is activated (so mobile menu collapses on navigation)
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  // Navbar background tint on scroll (replaces per-page inline scroll handler)
+  var navEl = document.querySelector('nav');
+  if (navEl) {
+    var update = function () {
+      navEl.style.background = window.scrollY > 100
+        ? 'rgba(22, 46, 48, 0.98)'
+        : 'rgba(30, 61, 64, 0.97)';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+})();
+
+{% if site.ga4 %}
+// GDPR consent banner
+(function () {
+  var banner = document.getElementById('gdprConsent');
+  if (!banner) return;
+  if (window.__slConsentStored !== 'granted' && window.__slConsentStored !== 'denied') {
+    banner.classList.add('is-open');
+  }
+  var accept = document.getElementById('gdprAccept');
+  var decline = document.getElementById('gdprDecline');
+  if (accept) accept.addEventListener('click', function () {
+    if (window.__slGrantConsent) window.__slGrantConsent();
+    banner.classList.remove('is-open');
+  });
+  if (decline) decline.addEventListener('click', function () {
+    if (window.__slDeclineConsent) window.__slDeclineConsent();
+    banner.classList.remove('is-open');
+  });
+})();
+{% endif %}
 </script>
 </body>
 </html>

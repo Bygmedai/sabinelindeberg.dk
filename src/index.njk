@@ -8,14 +8,25 @@ jsonLd: |
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": "https://sabinelindeberg.dk/#business",
     "name": "Indre Kald og Kraft",
     "description": "Hypnoseterapi, terapeutisk samtale og shamanistiske cirkler i Frederikssund ved Sabine Lindeberg.",
     "url": "https://sabinelindeberg.dk",
+    "image": "https://sabinelindeberg.dk/assets/materiale/sabine-portrait.jpg",
+    "logo": "https://sabinelindeberg.dk/assets/materiale/logo-tree.png",
     "telephone": "+4541120149",
     "email": "sabinelindeberg@hotmail.com",
+    "priceRange": "1.200–2.800 DKK",
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "17:00"
+    }],
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Frederikssund",
+      "addressRegion": "Hovedstaden",
       "addressCountry": "DK"
     },
     "founder": {
@@ -25,6 +36,36 @@ jsonLd: |
     "areaServed": {
       "@type": "Place",
       "name": "Frederikssund, Danmark"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Ydelser",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "Hypnoseterapi",
+          "url": "https://sabinelindeberg.dk/hypnoseterapi/",
+          "price": "1200",
+          "priceCurrency": "DKK"
+        },
+        {
+          "@type": "Offer",
+          "name": "Rygeafvænning (hypnose)",
+          "url": "https://sabinelindeberg.dk/hypnoseterapi/",
+          "price": "2800",
+          "priceCurrency": "DKK"
+        },
+        {
+          "@type": "Offer",
+          "name": "Terapeutisk samtale",
+          "url": "https://sabinelindeberg.dk/terapeutisk-samtale/"
+        },
+        {
+          "@type": "Offer",
+          "name": "Shamanistiske cirkler",
+          "url": "https://sabinelindeberg.dk/shamanistiske-cirkler/"
+        }
+      ]
     }
   }
 extraHead: |
@@ -583,21 +624,6 @@ extraHead: |
     .hero-photo img { max-width: 160px; }
   }
   </style>
-extraScripts: |
-  <script>
-  // Navbar scroll effect
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    const scrollY = window.scrollY;
-    if (scrollY > 100) {
-      nav.style.background = 'rgba(22, 46, 48, 0.98)';
-    } else {
-      nav.style.background = 'rgba(30, 61, 64, 0.97)';
-    }
-    lastScroll = scrollY;
-  });
-  </script>
 ---
 
 <!-- ========== HERO ========== -->
@@ -613,7 +639,7 @@ extraScripts: |
   <div class="container">
     <div class="hero-content">
       <div class="hero-text">
-        <img src="/assets/materiale/logo-tree.png" alt="Indre Kald og Kraft logo" class="hero-logo" style="width: 120px; height: 120px; margin-bottom: 1.2rem; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.3));">
+        <img src="/assets/materiale/logo-tree.png" alt="" aria-hidden="true" class="hero-logo" width="120" height="120" decoding="async" style="width: 120px; height: 120px; margin-bottom: 1.2rem; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.3));">
         <span class="hero-label">Hypnoseterapi · Samtale · Shamanistiske Cirkler</span>
         <h1>Indre Kald og Kraft</h1>
         <p class="hero-tagline">ved Sabine Lindeberg</p>
@@ -623,7 +649,7 @@ extraScripts: |
         <a href="/kontakt/" class="btn btn-gold">Book en samtale</a>
       </div>
       <div class="hero-photo" data-reveal>
-        <img src="/assets/materiale/sabine-portrait.jpg" alt="Sabine Lindeberg — terapeut og hypnoterapeut">
+        <img src="/assets/materiale/sabine-portrait.jpg" alt="Sabine Lindeberg — terapeut og hypnoterapeut" width="420" height="560" fetchpriority="high" decoding="async">
       </div>
     </div>
   </div>
@@ -656,22 +682,22 @@ extraScripts: |
     </div>
     <div class="services-grid">
       <div class="service-card stagger-item">
-        <div class="service-icon">✦</div>
+        <div class="service-icon" aria-hidden="true">✦</div>
         <h3>Hypnoseterapi</h3>
         <p>En nænsom og effektiv metode til at arbejde med de dybere lag i sindet — dér hvor mange af vores mønstre og reaktioner er formet.</p>
-        <a href="/hypnoseterapi/" class="card-link">Læs mere →</a>
+        <a href="/hypnoseterapi/" class="card-link" aria-label="Læs mere om hypnoseterapi">Læs mere →</a>
       </div>
       <div class="service-card stagger-item">
-        <div class="service-icon">❋</div>
+        <div class="service-icon" aria-hidden="true">❋</div>
         <h3>Terapeutisk samtale</h3>
         <p>Gennem samtale og refleksion arbejder vi med livsafklaring, relationer, valg og retning i livet. Et sted at tænke højt og blive mødt med ro.</p>
-        <a href="/terapeutisk-samtale/" class="card-link">Læs mere →</a>
+        <a href="/terapeutisk-samtale/" class="card-link" aria-label="Læs mere om terapeutisk samtale">Læs mere →</a>
       </div>
       <div class="service-card stagger-item">
-        <div class="service-icon">◎</div>
+        <div class="service-icon" aria-hidden="true">◎</div>
         <h3>Shamanistiske cirkler</h3>
         <p>I cirklerne arbejder vi med naturforbindelse, ritual og fællesskab. Gennem kraftsang forbinder vi os til vores egen energi og livskraft.</p>
-        <a href="/shamanistiske-cirkler/" class="card-link">Læs mere →</a>
+        <a href="/shamanistiske-cirkler/" class="card-link" aria-label="Læs mere om shamanistiske cirkler">Læs mere →</a>
       </div>
     </div>
   </div>
@@ -692,7 +718,7 @@ extraScripts: |
   <div class="container">
     <div class="about-inner">
       <div class="about-image" data-reveal>
-        <img src="/assets/materiale/sabine-sne-portrait.jpg" alt="Sabine Lindeberg i naturen" loading="lazy">
+        <img src="/assets/materiale/sabine-sne-portrait.jpg" alt="Sabine Lindeberg i naturen" width="480" height="640" loading="lazy" decoding="async">
       </div>
       <div class="about-text" data-reveal>
         <span class="section-label">Om Sabine</span>
@@ -720,30 +746,30 @@ extraScripts: |
         <p>Hvis du er i tvivl om, hvad der er det rigtige for dig, kan du starte med en afklarende samtale.</p>
         <div class="booking-details">
           <div class="booking-detail">
-            <div class="booking-detail-icon">📞</div>
-            <span><a href="tel:+4541120149" style="color: inherit; text-decoration: none;">+45 4112 0149</a></span>
+            <div class="booking-detail-icon" aria-hidden="true">📞</div>
+            <span><a href="tel:{{ site.phoneE164 }}" style="color: inherit; text-decoration: none;">{{ site.phone }}</a></span>
           </div>
           <div class="booking-detail">
-            <div class="booking-detail-icon">📍</div>
+            <div class="booking-detail-icon" aria-hidden="true">📍</div>
             <span>Behandlerlokaler i Frederikssund</span>
           </div>
           <div class="booking-detail">
-            <div class="booking-detail-icon">💻</div>
+            <div class="booking-detail-icon" aria-hidden="true">💻</div>
             <span>Online sessioner via video</span>
           </div>
           <div class="booking-detail">
-            <div class="booking-detail-icon">💰</div>
-            <span>Hypnoseterapi: 1.200 kr · Rygeafvænning: 2.800 kr</span>
+            <div class="booking-detail-icon" aria-hidden="true">💰</div>
+            <span>{{ site.prices.summary }}</span>
           </div>
           <div class="booking-detail">
-            <div class="booking-detail-icon">⏱</div>
-            <span>En session varer typisk 60–90 minutter</span>
+            <div class="booking-detail-icon" aria-hidden="true">⏱</div>
+            <span>En session varer typisk {{ site.session.duration }}</span>
           </div>
         </div>
         <a href="/kontakt/" class="btn btn-teal">Book en samtale</a>
       </div>
       <div class="booking-image">
-        <img src="/assets/materiale/sabine-smile.jpg" alt="Sabine Lindeberg" style="border-radius: var(--radius); max-width: 380px; aspect-ratio: 3/4; object-fit: cover; object-position: center 15%; box-shadow: 0 12px 40px rgba(0,0,0,0.08);" loading="lazy">
+        <img src="/assets/materiale/sabine-smile.jpg" alt="Sabine Lindeberg" width="380" height="507" style="border-radius: var(--radius); max-width: 380px; aspect-ratio: 3/4; object-fit: cover; object-position: center 15%; box-shadow: 0 12px 40px rgba(0,0,0,0.08);" loading="lazy" decoding="async">
       </div>
     </div>
   </div>

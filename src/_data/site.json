@@ -6,7 +6,9 @@
   "locale": "da_DK",
   "email": "sabinelindeberg@hotmail.com",
   "phone": "+45 4112 0149",
+  "phoneE164": "+4541120149",
   "ga4": "G-1T736SKWVT",
+  "themeColor": "#1E3D40",
 
   "logo": {
     "image": "/assets/materiale/logo-tree.png",
@@ -28,6 +30,41 @@
     "defaultImage": "/assets/materiale/hero-banner.png",
     "imageWidth": "1200",
     "imageHeight": "630"
+  },
+
+  "address": {
+    "locality": "Frederikssund",
+    "region": "Hovedstaden",
+    "country": "DK"
+  },
+
+  "openingHours": [
+    "Mo-Fr 09:00-17:00"
+  ],
+
+  "openingHoursDisplay": "Mandag–fredag 09:00–17:00",
+
+  "priceRange": "1.200–2.800 kr",
+
+  "prices": {
+    "hypnoseterapi": {
+      "label": "Hypnoseterapi",
+      "amount": 1200,
+      "currency": "DKK",
+      "displayShort": "1.200 kr"
+    },
+    "rygeafvaenning": {
+      "label": "Rygeafvænning",
+      "amount": 2800,
+      "currency": "DKK",
+      "displayShort": "2.800 kr"
+    },
+    "summary": "Hypnoseterapi: 1.200 kr · Rygeafvænning: 2.800 kr"
+  },
+
+  "session": {
+    "duration": "60–90 minutter",
+    "format": "I Frederikssund eller online via video"
   },
 
   "nav": {

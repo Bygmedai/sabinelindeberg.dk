@@ -1,23 +1,27 @@
 {#
-  nav.njk — Sabine Lindeberg navigation partial (WP F-6)
+  nav.njk — Sabine Lindeberg navigation partial
   Config from _data/site.json:
     site.logo.image/alt/text — Image-based logo
     site.nav.links[]         — Array of {text, url}
     site.nav.cta             — {text, url} for CTA button
+  A11y:
+    - aria-current="page" on the active link
+    - aria-expanded / aria-controls on the hamburger
+    - skip-link target lives in base.njk (<main id="main">)
 #}
-<nav>
+<nav aria-label="Hovedmenu">
   <div class="container">
-    <a href="/" class="nav-brand">
-      <img src="{{ site.logo.image }}" alt="{{ site.logo.alt }}" class="nav-logo-img">
+    <a href="/" class="nav-brand"{% if page.url == "/" %} aria-current="page"{% endif %}>
+      <img src="{{ site.logo.image }}" alt="{{ site.logo.alt }}" class="nav-logo-img" width="44" height="44">
       <span class="nav-logo-text">{{ site.logo.text | safe }}</span>
     </a>
     <ul class="nav-links" id="navLinks">
       {%- for link in site.nav.links %}
-      <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+      <li><a href="{{ link.url }}"{% if page.url == link.url %} aria-current="page"{% endif %}>{{ link.text }}</a></li>
       {%- endfor %}
-      <li><a href="{{ site.nav.cta.url }}" class="nav-cta">{{ site.nav.cta.text }}</a></li>
+      <li><a href="{{ site.nav.cta.url }}" class="nav-cta"{% if page.url == site.nav.cta.url %} aria-current="page"{% endif %}>{{ site.nav.cta.text }}</a></li>
     </ul>
-    <button type="button" class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+    <button type="button" class="hamburger" id="navToggle" aria-label="Åbn menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
   </div>
