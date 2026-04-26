@@ -112,13 +112,145 @@ Forslag markeret ✅ er **implementeret i denne PR**. Forslag markeret 📋 er
 
 ## 5. Anbefalet næste skridt (uden for denne PR)
 
-1. **Komprimer `hero-banner.png` (1.4 MB)** og generer dedikeret OG-image (1200×630, < 100 KB).
-2. **Refactor: components.css** (Lag 3) — flyt duplikeret btn/section-label/hero CSS ud af `extraHead`. Sparer ~7 KB rendered HTML pr. sidevisning.
-3. **Self-host fonts** (Cormorant Garamond + Jost) — lokale WOFF2 fjerner Google Fonts-dependency og forbedrer LCP.
-4. **Form-backend** (Formspree / Netlify Forms / Cloudflare Pages function).
-5. **Cal.com / Calendly** integration så Sabine ikke skal koordinere bookings manuelt.
-6. **Lighthouse-budget i CI** — sæt `performance >= 85`, `accessibility >= 95` som hard gates (ikke kun warnings).
-7. **Add `Permissions-Policy` og `Content-Security-Policy`** via `<meta>` (GitHub Pages tillader ikke headers, men meta-CSP virker).
+> **Status — opfølgning fra 26. april 2026:** alle 5 oprindelige
+> "next-steps" er nu implementeret i samme PR. Se sektion 7 for detaljer
+> og setup-instruktioner. Punkterne herunder er nye anbefalinger.
+
+1. **Lighthouse-budget i CI** — sæt `performance >= 85`, `accessibility >= 95` som hard gates (ikke kun warnings).
+2. **`Permissions-Policy` og `Content-Security-Policy`** via `<meta>` (GitHub Pages tillader ikke headers, men meta-CSP virker for de fleste regler).
+3. **Service Worker** med Workbox — offline-fallback + cache-first strategi for fonts/billeder. Især nyttigt på mobil med dårligt netværk.
+4. **Sproghåndtering** — hvis Sabine ønsker at tilbyde sider på engelsk, sæt 11ty op med locale-collections (`en/` + `da/` mapper, hreflang-pairs).
+5. **Newsletter-tilmelding** (fx Buttondown, Mailchimp) hvis Sabine vil have en mailingliste til workshops/cirkler.
+6. **PostCSS / autoprefixer** i build-pipelinen — automatisk vendor-prefix.
+
+---
+
+## 7. Follow-up implementering — 26. april 2026
+
+De 5 oprindelige "anbefalede næste skridt" blev færdiggjort i samme PR via et follow-up commit. Her er hvad det dækker:
+
+### 7.1 components.css (Lag 3 — fælles komponenter)
+
+Filer: `src/assets/css/components.css` (ny), alle 6 `*.njk` siders
+`extraHead` er slankede ned. Linket i `head.njk` efter `base.css`.
+
+**Indhold flyttet ud:** `.btn` + `.btn-gold` + `.btn-outline` + `.btn-teal`,
+`.section-label`, hele hero-mønsteret (`.hero`, `.hero-bg`, `.hero-gradient`,
+`.hero-swoosh`, `.hero-content`, `.hero-label`, `.hero h1`, `.hero-tagline`),
+intro-pattern, content-section pattern, CTA-pattern, view-transitions, og
+`@property` gradient-animationen.
+
+**Effekt:** ca. 25 KB færre genererede HTML-bytes pr. sidesæt; CSS caches på
+første besøg og deles på tværs af alle sider; ét sted at rette
+fælles styling.
+
+**Side-unik CSS** ligger stadig i hver sides `extraHead` — kun den unikke
+del. Service-sider er nu kun 4 linjer CSS hver (kun `hero-bg` baggrund).
+
+### 7.2 Self-hostede fonts (Cormorant Garamond + Jost)
+
+Filer: `src/assets/fonts/*.woff2` (6 filer, ~200 KB total),
+`src/assets/fonts/fonts.css` (20 `@font-face` regler — latin + latin-ext
+subsets), `head.njk` opdateret, `site.json` `fonts.url` peger på den
+lokale CSS. `preconnect` til Google's CDN er fjernet — ingen tredjeparts-
+afhængighed mere.
+
+**Preload:** to vigtigste vægte (Cormorant 500 normal og Jost 400) er
+preloadede via `<link rel="preload" as="font" crossorigin>` i head, så de
+hentes parallelt med CSS — vigtig for LCP.
+
+**Effekt:** ingen FOIT (Flash of Invisible Text) på første besøg, ingen
+data sendt til Google, hurtigere første-render (-1 DNS-handshake -1 TLS
+til fonts.gstatic.com).
+
+### 7.3 Billed-optimering + dedikeret OG-image
+
+Filer: `scripts/optimize-images.js` (ny — sharp-baseret), nye filer i
+`src/assets/materiale/`: `og-image.jpg` (96 KB, 1200×630), 5 `.webp`
+companions, optimeret `logo-tree.png` (105 KB → 27 KB) og `logo-tree.webp`.
+Ubrugte tunge filer (`hero-banner.png` 1.4 MB, `logo-horizontal.png`,
+`logo-vertical.png`, `social-square.png`, `hero-brand-banner.jpg`) flyttet
+til `src/assets/_archive/` — ikke shippet til prod.
+
+`eleventy.config.js` opdateret med eksplicit passthrough (kun
+`materiale/`, `css/`, `fonts/`) så `_archive/` ikke følger med i build.
+
+`site.json` `og.defaultImage` peger nu på `/assets/materiale/og-image.jpg`.
+
+`index.njk` hero-portræt bruger nu `<picture>` med WebP-source +
+JPG-fallback. Modern browsere får 54 KB WebP, ældre får 67 KB JPG.
+
+**Effekt på shippet `_site/`:** 4.1 MB → 1.2 MB i `_site/assets/materiale/`
+(70% reduktion). LCP forventet ~25-40% hurtigere på langsom mobil.
+
+`npm run optimize:images` kører pipelinen igen hvis Sabine tilføjer nye
+billeder.
+
+### 7.4 Form-backend (Formspree-ready, mailto-fallback)
+
+Filer: `kontakt.njk` (form har nu `data-endpoint`-attribut og `extraScripts`
+har en branch til ægte POST + mailto-fallback), `site.json` har et nyt
+`forms.endpoint` felt.
+
+**Setup-instruktion til Sabine:**
+
+1. Opret konto på https://formspree.io (gratis tier: 50 indsendelser/måned).
+2. Opret en ny form, kopier dens endpoint-URL (formatet
+   `https://formspree.io/f/xxxxxxxx`).
+3. Indsæt URL'en i `src/_data/site.json` under `forms.endpoint`.
+4. Commit og push — formularen poster nu direkte til Formspree, og Sabine
+   får en email pr. besked uden at brugeren skal åbne sin mail-klient.
+
+Hvis feltet er tomt, falder formularen automatisk tilbage til mailto-link
+som før — ingen brugeroplevelse-regression.
+
+### 7.5 Cal.com booking-widget (lazy-loaded)
+
+Filer: `kontakt.njk` (ny `{% if site.booking.calcom %}` sektion lige under
+hero med en `#cal-booking-placeholder` der lazy-loader Cal.coms inline-
+embed via IntersectionObserver), `site.json` har et nyt `booking.calcom`
+felt.
+
+**Setup-instruktion til Sabine:**
+
+1. Opret konto på https://cal.com (gratis tier).
+2. Opret event-types Sabine vil tilbyde online (fx "30 min afklarende
+   samtale", "Hypnoseterapi 60 min").
+3. Notér Sabines Cal.com-namespace (fx hvis hendes link er
+   `cal.com/sabine-lindeberg/30min`, så er namespace
+   `sabine-lindeberg/30min`).
+4. Indsæt namespace i `src/_data/site.json` under `booking.calcom`.
+5. Commit og push — booking-kalenderen vises nu på `/kontakt/`-siden.
+
+Embed'et er themed med Sabines guld (`--cal-brand: #D4AF37`) og loades
+KUN når brugeren scroller ned til sektionen — så ingen perf-regression
+for besøgende der bare vil ringe.
+
+Hvis feltet er tomt, vises sektionen slet ikke — kontaktformularen som
+før.
+
+---
+
+## 8. Filer ændret i follow-up
+
+| Fil | Type | Hvad |
+|-----|------|------|
+| `src/assets/css/components.css` | A | Ny Lag 3-fil — delte komponenter |
+| `src/assets/fonts/*.woff2` | A | 6 selv-hostede font-filer |
+| `src/assets/fonts/fonts.css` | A | 20 `@font-face` regler (latin/latin-ext) |
+| `src/assets/_archive/` | A | 5 ubrugte legacy-filer flyttet hertil |
+| `src/assets/materiale/og-image.jpg` | A | Dedikeret 1200×630 OG-image |
+| `src/assets/materiale/*.webp` | A | 6 WebP-companions |
+| `src/assets/materiale/logo-tree.png` | M | Re-encoded (105 KB → 27 KB) |
+| `src/assets/materiale/sabine-*.jpg` | M | mozjpeg q82 (gennemsnitligt 25% mindre) |
+| `scripts/optimize-images.js` | A | Sharp-baseret billed-optimering |
+| `package.json` | M | `sharp` devDep + `optimize:images` script |
+| `eleventy.config.js` | M | Eksplicit passthrough (ekskluderer `_archive/`) |
+| `src/_data/site.json` | M | `fonts.url` peger lokalt; `fonts.preload`; `forms.endpoint`; `booking.calcom`; `og.defaultImage` opdateret |
+| `src/_includes/partials/head.njk` | M | Self-hosted fonts; preload; preconnect-fjernet; components.css link |
+| `src/index.njk`, `src/hypnoseterapi.njk`, `src/terapeutisk-samtale.njk`, `src/shamanistiske-cirkler.njk`, `src/om-sabine.njk`, `src/kontakt.njk` | M | Slankede `extraHead`; index har `<picture>` på hero |
+| `src/kontakt.njk` | M | Form: `data-endpoint`, async POST-branch; Cal.com lazy-embed sektion |
+| `docs/QA-REVIEW-2026-04.md` | M | Denne sektion 7 + 8 |
 
 ---
 

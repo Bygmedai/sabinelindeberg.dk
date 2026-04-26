@@ -19,7 +19,11 @@
   "fonts": {
     "display": "Cormorant Garamond",
     "body": "Jost",
-    "url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap"
+    "url": "/assets/fonts/fonts.css",
+    "preload": [
+      "/assets/fonts/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2",
+      "/assets/fonts/92zatBhPNqw73ord4iYl.woff2"
+    ]
   },
 
   "skin": {
@@ -27,7 +31,7 @@
   },
 
   "og": {
-    "defaultImage": "/assets/materiale/hero-banner.png",
+    "defaultImage": "/assets/materiale/og-image.jpg",
     "imageWidth": "1200",
     "imageHeight": "630"
   },
@@ -65,6 +69,16 @@
   "session": {
     "duration": "60–90 minutter",
     "format": "I Frederikssund eller online via video"
+  },
+
+  "forms": {
+    "comment": "Indsæt Formspree form-id (eller anden POST-endpoint URL) for ægte form-aflevering. Tomt felt = mailto-fallback.",
+    "endpoint": ""
+  },
+
+  "booking": {
+    "comment": "Indsæt Cal.com-namespace (fx 'sabinelindeberg/30min') for embedded booking. Tomt felt = ingen widget, kun nuværende kontaktformular.",
+    "calcom": ""
   },
 
   "nav": {

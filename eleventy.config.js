@@ -1,5 +1,8 @@
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  // Eksplicit passthrough — undgår at _archive/ shippes til prod.
+  eleventyConfig.addPassthroughCopy({ "src/assets/css": "assets/css" });
+  eleventyConfig.addPassthroughCopy({ "src/assets/fonts": "assets/fonts" });
+  eleventyConfig.addPassthroughCopy({ "src/assets/materiale": "assets/materiale" });
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
 

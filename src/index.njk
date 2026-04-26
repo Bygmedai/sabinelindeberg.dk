@@ -70,142 +70,22 @@ jsonLd: |
   }
 extraHead: |
   <style>
-  /* ========== BUTTONS ========== */
-  .btn {
-    display: inline-block;
-    padding: 15px 36px;
-    border-radius: 6px;
-    font-family: var(--font-body);
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    transition: var(--transition);
-    cursor: pointer;
-    border: none;
-  }
+  /* Side-unik CSS for forsiden. Delte .btn/.section-label/.cta-section
+     ligger i components.css. Reveal/stagger ligger i base.css. */
 
-  .btn-gold {
-    background: var(--gold);
-    color: var(--petrol);
-  }
-
-  .btn-gold:hover {
-    background: var(--gold-light);
-    color: var(--petrol);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--gold);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-  }
-
-  .btn-outline:hover {
-    border-color: var(--gold);
-    background: rgba(212, 175, 55, 0.08);
-    color: var(--gold);
-  }
-
-  .btn-teal {
-    background: var(--teal);
-    color: #FFFFFF;
-  }
-
-  .btn-teal:hover {
-    background: var(--teal-light);
-    color: #FFFFFF;
-    transform: translateY(-2px);
-  }
-
-  /* ========== SECTION LABELS ========== */
-  .section-label {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-
-  /* ========== HERO ========== */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: var(--petrol);
-    overflow: hidden;
-    padding-top: 72px;
-  }
-
-  .hero-bg {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('/assets/materiale/sabine-sne-bred.jpg') center/cover no-repeat;
-    opacity: 0.15;
-    filter: blur(1px);
-  }
-
-  .hero-gradient {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 250px;
-    background: linear-gradient(to top, var(--petrol), transparent);
-  }
-
-  .hero-swoosh {
-    position: absolute;
-    bottom: 15%;
-    left: -5%;
-    right: -5%;
-    z-index: 1;
-    opacity: 0.35;
-  }
-
+  /* HERO override — forsiden har 2-kolonne grid med portræt */
+  .hero { min-height: 100vh; }
+  .hero-bg { background-image: url('/assets/materiale/sabine-sne-bred.jpg'); }
   .hero-content {
-    position: relative;
-    z-index: 2;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
     padding: 60px 0;
-  }
-
-  .hero-text {
     text-align: left;
   }
-
-  .hero-label {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-    opacity: 0.9;
-  }
-
-  .hero h1 {
-    font-size: clamp(40px, 6vw, 62px);
-    font-weight: 400;
-    color: #FFFFFF;
-    margin-bottom: 10px;
-    font-style: italic;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-display);
-    font-size: clamp(18px, 2.5vw, 23px);
-    font-weight: 400;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 28px;
-  }
-
+  .hero-text { text-align: left; }
+  .hero-tagline { margin-bottom: 28px; }
   .hero-desc {
     font-size: 18px;
     color: rgba(255,255,255,0.8);
@@ -213,13 +93,7 @@ extraHead: |
     line-height: 1.85;
     margin-bottom: 36px;
   }
-
-  .hero-photo {
-    position: relative;
-    justify-self: end;
-    align-self: center;
-  }
-
+  .hero-photo { position: relative; justify-self: end; align-self: center; }
   .hero-photo img {
     border-radius: var(--radius);
     width: 100%;
@@ -229,7 +103,6 @@ extraHead: |
     object-position: center 20%;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   }
-
   .hero-photo::after {
     content: '';
     position: absolute;
@@ -240,32 +113,7 @@ extraHead: |
     z-index: -1;
   }
 
-  /* ========== INTRO ========== */
-  .intro {
-    padding: 100px 0;
-    background: var(--sand);
-  }
-
-  .intro-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .intro h2 {
-    font-size: clamp(28px, 4vw, 42px);
-    font-style: italic;
-    margin-bottom: 28px;
-    color: var(--petrol);
-  }
-
-  .intro p {
-    font-size: 18px;
-    color: var(--text);
-    line-height: 1.9;
-    margin-bottom: 16px;
-  }
-
+  /* INTRO pain-points — unikt for forsiden */
   .pain-points {
     display: flex;
     flex-direction: column;
@@ -274,7 +122,6 @@ extraHead: |
     max-width: 480px;
     margin: 32px auto 0;
   }
-
   .pain-point {
     display: flex;
     align-items: flex-start;
@@ -283,17 +130,14 @@ extraHead: |
     color: var(--text);
     line-height: 1.6;
   }
-
   .pain-point::before {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     background: var(--gold);
     border-radius: 50%;
     flex-shrink: 0;
     margin-top: 10px;
   }
-
   .intro-closing {
     margin-top: 32px;
     font-size: 18px;
@@ -301,28 +145,15 @@ extraHead: |
     font-style: italic;
   }
 
-  /* ========== SERVICES ========== */
-  .services {
-    padding: 100px 0;
-    background: #FFFFFF;
-  }
-
-  .services-header {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-
-  .services-header h2 {
-    font-size: clamp(28px, 4vw, 42px);
-    font-style: italic;
-  }
-
+  /* SERVICES grid */
+  .services { padding: 100px 0; background: #FFFFFF; }
+  .services-header { text-align: center; margin-bottom: 56px; }
+  .services-header h2 { font-size: clamp(28px, 4vw, 42px); font-style: italic; }
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
   }
-
   .service-card {
     background: var(--sand-light);
     border-radius: var(--radius);
@@ -333,7 +164,6 @@ extraHead: |
     position: relative;
     overflow: hidden;
   }
-
   .service-card::before {
     content: '';
     position: absolute;
@@ -343,50 +173,39 @@ extraHead: |
     background: var(--gold);
     border-radius: 0 0 4px 4px;
   }
-
   .service-card:hover {
     border-color: rgba(212, 175, 55, 0.25);
     transform: translateY(-4px);
     box-shadow: 0 12px 36px rgba(30, 61, 64, 0.08);
   }
-
-  .service-icon {
-    font-size: 40px;
-    margin-bottom: 20px;
-    color: var(--gold);
-  }
-
+  .service-icon { font-size: 40px; margin-bottom: 20px; color: var(--gold); }
   .service-card h3 {
     font-size: 26px;
     font-style: italic;
     margin-bottom: 18px;
     color: var(--petrol);
   }
-
   .service-card p {
     font-size: 17px;
     color: var(--text);
     line-height: 1.8;
     margin-bottom: 22px;
   }
-
   .card-link {
     font-size: 15px;
     font-weight: 500;
     color: var(--teal);
     letter-spacing: 0.5px;
   }
-
   .card-link:hover { color: var(--gold); }
 
-  /* ========== PARALLAX NATURE ========== */
+  /* PARALLAX NATURE */
   .nature-parallax {
     position: relative;
     height: 400px;
     background: url('/assets/materiale/sabine-natur.jpg') center/cover no-repeat;
     background-attachment: fixed;
   }
-
   .nature-overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -395,13 +214,7 @@ extraHead: |
     align-items: center;
     justify-content: center;
   }
-
-  .nature-quote {
-    text-align: center;
-    max-width: 600px;
-    padding: 0 24px;
-  }
-
+  .nature-quote { text-align: center; max-width: 600px; padding: 0 24px; }
   .nature-quote blockquote {
     font-family: var(--font-display);
     font-size: clamp(24px, 4vw, 36px);
@@ -410,7 +223,6 @@ extraHead: |
     line-height: 1.4;
     margin-bottom: 16px;
   }
-
   .nature-quote cite {
     font-family: var(--font-body);
     font-size: 15px;
@@ -419,14 +231,13 @@ extraHead: |
     letter-spacing: 1px;
   }
 
-  /* ========== ABOUT TEASER ========== */
+  /* ABOUT TEASER */
   .about-teaser {
     padding: 100px 0;
     background: var(--petrol);
     position: relative;
     overflow: hidden;
   }
-
   .about-teaser::before {
     content: '';
     position: absolute;
@@ -435,25 +246,19 @@ extraHead: |
     border-radius: 50%;
     border: 1px solid rgba(212, 175, 55, 0.06);
   }
-
   .about-inner {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     gap: 64px;
     align-items: center;
   }
-
-  .about-image {
-    position: relative;
-  }
-
+  .about-image { position: relative; }
   .about-image img {
     border-radius: var(--radius);
     width: 100%;
     aspect-ratio: 3/4;
     object-fit: cover;
   }
-
   .about-image::after {
     content: '';
     position: absolute;
@@ -463,28 +268,24 @@ extraHead: |
     border-radius: var(--radius);
     z-index: -1;
   }
-
   .about-text h2 {
     font-size: clamp(28px, 4vw, 38px);
     font-style: italic;
     color: #FFFFFF;
     margin-bottom: 24px;
   }
-
   .about-text p {
     font-size: 18px;
     color: rgba(255,255,255,0.85);
     line-height: 1.9;
     margin-bottom: 16px;
   }
-
   .about-methods {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 28px 0 36px;
   }
-
   .about-method {
     display: flex;
     align-items: center;
@@ -492,7 +293,6 @@ extraHead: |
     font-size: 17px;
     color: rgba(255,255,255,0.8);
   }
-
   .about-method::before {
     content: '';
     width: 24px; height: 1px;
@@ -500,40 +300,32 @@ extraHead: |
     flex-shrink: 0;
   }
 
-  /* ========== BOOKING TEASER ========== */
-  .booking-teaser {
-    padding: 80px 0;
-    background: var(--sand);
-  }
-
+  /* BOOKING TEASER */
+  .booking-teaser { padding: 80px 0; background: var(--sand); }
   .booking-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
     align-items: center;
   }
-
   .booking-info h2 {
     font-size: clamp(26px, 3.5vw, 36px);
     font-style: italic;
     margin-bottom: 20px;
     color: var(--petrol);
   }
-
   .booking-info p {
     font-size: 18px;
     color: var(--text);
     line-height: 1.85;
     margin-bottom: 16px;
   }
-
   .booking-details {
     display: flex;
     flex-direction: column;
     gap: 16px;
     margin: 28px 0;
   }
-
   .booking-detail {
     display: flex;
     align-items: center;
@@ -541,10 +333,8 @@ extraHead: |
     font-size: 17px;
     color: var(--text);
   }
-
   .booking-detail-icon {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border-radius: 50%;
     background: var(--gold-soft);
     display: flex;
@@ -554,58 +344,7 @@ extraHead: |
     flex-shrink: 0;
   }
 
-  /* ========== CTA ========== */
-  .cta-section {
-    padding: 100px 0;
-    background: #FFFFFF;
-    text-align: center;
-  }
-
-  .cta-section h2 {
-    font-size: clamp(28px, 4vw, 44px);
-    font-style: italic;
-    margin-bottom: 18px;
-    color: var(--petrol);
-  }
-
-  .cta-section p {
-    font-size: 18px;
-    color: var(--text);
-    max-width: 520px;
-    margin: 0 auto 36px;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* ========== SCROLL REVEAL ========== */
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  [data-reveal].revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .stagger-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .stagger-item.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ========== RESPONSIVE ========== */
+  /* RESPONSIVE override (forside-specifikt) */
   @media (max-width: 960px) {
     .hero-content { grid-template-columns: 1fr; text-align: center; gap: 40px; }
     .hero-photo { order: -1; }
@@ -618,9 +357,7 @@ extraHead: |
     .booking-inner { grid-template-columns: 1fr; }
     .nature-parallax { background-attachment: scroll; }
   }
-
   @media (max-width: 680px) {
-    .cta-buttons { flex-direction: column; align-items: center; }
     .hero-photo img { max-width: 160px; }
   }
   </style>
@@ -649,7 +386,10 @@ extraHead: |
         <a href="/kontakt/" class="btn btn-gold">Book en samtale</a>
       </div>
       <div class="hero-photo" data-reveal>
-        <img src="/assets/materiale/sabine-portrait.jpg" alt="Sabine Lindeberg — terapeut og hypnoterapeut" width="420" height="560" fetchpriority="high" decoding="async">
+        <picture>
+          <source srcset="/assets/materiale/sabine-portrait.webp" type="image/webp">
+          <img src="/assets/materiale/sabine-portrait.jpg" alt="Sabine Lindeberg — terapeut og hypnoterapeut" width="420" height="560" fetchpriority="high" decoding="async">
+        </picture>
       </div>
     </div>
   </div>
