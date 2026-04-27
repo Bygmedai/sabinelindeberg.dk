@@ -4,13 +4,29 @@ eleventyExcludeFromCollections: true
 layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemaps-image/1.1">
+{%- set pageImages = {
+  "/": ["/assets/materiale/sabine-portrait.jpg", "/assets/materiale/sabine-sne-portrait.jpg", "/assets/materiale/sabine-smile.jpg"],
+  "/hypnoseterapi/": ["/assets/materiale/sabine-portrait.jpg", "/assets/materiale/sabine-sne-bred.jpg"],
+  "/terapeutisk-samtale/": ["/assets/materiale/sabine-portrait.jpg", "/assets/materiale/sabine-smile.jpg"],
+  "/shamanistiske-cirkler/": ["/assets/materiale/sabine-natur.jpg", "/assets/materiale/sabine-sne-portrait.jpg"],
+  "/om-sabine/": ["/assets/materiale/sabine-sne-portrait.jpg", "/assets/materiale/sabine-portrait.jpg", "/assets/materiale/sabine-smile.jpg"],
+  "/kontakt/": ["/assets/materiale/sabine-smile.jpg"]
+} %}
 {%- for entry in collections.all -%}
   {%- if entry.url and not entry.data.noindex and entry.url != "/404.html" -%}
   <url>
     <loc>{{ site.url }}{{ entry.url }}</loc>
     <lastmod>{{ entry.date | isoDate }}</lastmod>
     <priority>{% if entry.url == "/" %}1.0{% elif entry.url == "/kontakt/" %}0.9{% elif entry.url == "/om-sabine/" %}0.7{% else %}0.8{% endif %}</priority>
+{%- if pageImages[entry.url] %}
+{%- for img in pageImages[entry.url] %}
+    <image:image>
+      <image:loc>{{ site.url }}{{ img }}</image:loc>
+    </image:image>
+{%- endfor %}
+{%- endif %}
   </url>
   {%- endif -%}
 {%- endfor %}

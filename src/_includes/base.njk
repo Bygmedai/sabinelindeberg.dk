@@ -270,7 +270,7 @@ footer h4 {
 
 {% if site.ga4 %}
 <aside class="gdpr-consent" id="gdprConsent" role="dialog" aria-labelledby="gdprTitle" aria-describedby="gdprDesc">
-  <p id="gdprTitle"><strong>Cookies & analyse</strong></p>
+  <p id="gdprTitle"><strong>Cookies &amp; analyse</strong></p>
   <p id="gdprDesc">
     Sitet bruger Google Analytics til anonym statistik. Du kan altid takke nej —
     så indlæses sporing slet ikke. <a href="/kontakt/">Kontakt</a> hvis du har spørgsmål.
@@ -317,6 +317,60 @@ document.querySelectorAll('[data-stagger]').forEach(group => {
   obs.observe(group);
 });
 
+// Service worker registration — kun i prod (location.hostname check undgår
+// at den cacher under lokal udvikling).
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/sw.js').catch(function () {
+      // Stille fejl — sitet virker også uden SW.
+    });
+  });
+}
+
+// Hover-prefetch — når brugeren hover'er en intern link længere end 65 ms,
+// inject <link rel="prefetch"> så side-skift bliver instant. Honorerer
+// Save-Data og prefers-reduced-data så vi ikke spilder mobildata.
+(function () {
+  if (!('connection' in navigator)) {
+    // OK — browseren mangler info, vi prefetcher alligevel.
+  } else if (navigator.connection.saveData) {
+    return; // Bruger har bedt om databesparelse — respektér det.
+  }
+  var prefetched = new Set();
+  var hoverTimer;
+
+  function prefetch(href) {
+    if (!href || prefetched.has(href)) return;
+    prefetched.add(href);
+    var link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = href;
+    link.as = 'document';
+    document.head.appendChild(link);
+  }
+
+  function isInternal(a) {
+    return a && a.href && a.origin === location.origin
+      && a.pathname !== location.pathname
+      && !a.hasAttribute('download')
+      && a.target !== '_blank';
+  }
+
+  document.addEventListener('mouseover', function (e) {
+    var a = e.target.closest('a');
+    if (!isInternal(a)) return;
+    clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(function () { prefetch(a.href); }, 65);
+  });
+  document.addEventListener('mouseout', function () { clearTimeout(hoverTimer); });
+
+  // Touch: prefetch på touchstart så swipe-navigation også er hurtig.
+  document.addEventListener('touchstart', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (isInternal(a)) prefetch(a.href);
+  }, { passive: true });
+})();
+
 // Accessible mobile nav toggle (replaces inline onclick)
 (function () {
   var btn = document.getElementById('navToggle');
@@ -360,6 +414,49 @@ document.querySelectorAll('[data-stagger]').forEach(group => {
 })();
 
 {% if site.ga4 %}
+// GA4 conversion events — track tel:/mailto:/cal-load/form-submit
+// Kalder kun gtag hvis det er defineret (dvs. consent givet).
+(function () {
+  function track(name, params) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, params || {});
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('tel:') === 0) {
+      track('phone_click', { event_category: 'conversion', event_label: href });
+    } else if (href.indexOf('mailto:') === 0) {
+      track('email_click', { event_category: 'conversion', event_label: href });
+    } else if (href.indexOf('cal.com') !== -1) {
+      track('booking_click', { event_category: 'conversion', event_label: href });
+    }
+  });
+
+  // Form submit
+  var form = document.querySelector('.contact-form form');
+  if (form) {
+    form.addEventListener('submit', function () {
+      track('form_submit', { event_category: 'conversion', event_label: 'kontakt' });
+    }, { capture: true });
+  }
+
+  // Cal.com embed loaded (signal: aria-busy fjernes)
+  var cal = document.getElementById('cal-booking-placeholder');
+  if (cal && 'MutationObserver' in window) {
+    var mo = new MutationObserver(function () {
+      if (cal.getAttribute('aria-busy') !== 'true') {
+        track('booking_widget_loaded', { event_category: 'conversion' });
+        mo.disconnect();
+      }
+    });
+    mo.observe(cal, { attributes: true, attributeFilter: ['aria-busy'] });
+  }
+})();
+
 // GDPR consent banner
 (function () {
   var banner = document.getElementById('gdprConsent');

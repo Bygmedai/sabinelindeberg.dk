@@ -1,8 +1,8 @@
 ---
 layout: base.njk
-title: "Terapeutisk Samtale — Indre Kald og Kraft"
+title: "Terapeutisk Samtale"
 description: "Terapeutisk samtale i Frederikssund. Et sikkert rum til refleksion, livsafklaring og retning hos Sabine Lindeberg."
-ogTitle: "Terapeutisk Samtale — Indre Kald og Kraft"
+ogTitle: "Terapeutisk Samtale"
 ogDescription: "Et sikkert rum til refleksion, livsafklaring og retning. Terapeutisk samtale ved Sabine Lindeberg."
 jsonLd: |
   {
@@ -155,10 +155,10 @@ extraHead: |
   <div class="container" data-reveal>
     <span class="section-label">Tag første skridt</span>
     <h2>Klar til at tale?</h2>
-    <p>Hvis du gerne vil have et sted, hvor du kan reflektere over dit liv uden at være alene med det — ring <a href="tel:+4541120149" style="color: var(--gold); text-decoration: none; font-weight: 600;">+45 4112 0149</a> eller book online.</p>
+    <p>Hvis du gerne vil have et sted, hvor du kan reflektere over dit liv uden at være alene med det — ring <a href="tel:{{ site.phoneE164 }}" style="color: var(--gold); text-decoration: none; font-weight: 600;">{{ site.phone }}</a> eller book online.</p>
     <div class="cta-buttons">
       <a href="/kontakt/" class="btn btn-gold gradient-animated">Book en samtale</a>
-      <a href="tel:+4541120149" class="btn btn-teal">Ring direkte</a>
+      <a href="tel:{{ site.phoneE164 }}" class="btn btn-teal">Ring direkte</a>
     </div>
   </div>
 </section>

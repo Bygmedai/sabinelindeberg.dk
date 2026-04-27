@@ -101,7 +101,7 @@ jobs:
         run: |
           http-server _site -p 8080 -s &
           sleep 2
-      - name: Run Lighthouse on key pages
+      - name: Run Lighthouse on key pages (hard gates)
         run: |
           PAGES=(
             "http://localhost:8080/"
@@ -111,30 +111,41 @@ jobs:
             "http://localhost:8080/om-sabine/"
             "http://localhost:8080/kontakt/"
           )
+          # Lighthouse-budgets — fail PR hvis nogle af disse ikke holdes.
+          MIN_PERF=80
+          MIN_A11Y=95
+          MIN_SEO=95
+          MIN_BP=90
           FAILED=0
           for URL in "${PAGES[@]}"; do
             echo "=== Testing $URL ==="
+            rm -rf .lighthouseci
             lhci collect --url="$URL" --settings.chromeFlags="--no-sandbox --headless" || true
             REPORT=$(ls -t .lighthouseci/lhr-*.json 2>/dev/null | head -1)
             if [ -f "$REPORT" ]; then
-              python3 -c "
+              python3 - "$REPORT" "$MIN_PERF" "$MIN_A11Y" "$MIN_SEO" "$MIN_BP" <<'PYEOF'
           import json, sys
-          data = json.load(open(sys.argv[1]))
+          report, min_perf, min_a11y, min_seo, min_bp = sys.argv[1], *map(int, sys.argv[2:])
+          data = json.load(open(report))
           cats = data.get('categories', {})
-          a11y = int(cats.get('accessibility', {}).get('score', 0) * 100)
-          seo = int(cats.get('seo', {}).get('score', 0) * 100)
-          print(f'  Accessibility: {a11y} | SEO: {seo}')
+          perf = int((cats.get('performance', {}).get('score') or 0) * 100)
+          a11y = int((cats.get('accessibility', {}).get('score') or 0) * 100)
+          seo  = int((cats.get('seo', {}).get('score') or 0) * 100)
+          bp   = int((cats.get('best-practices', {}).get('score') or 0) * 100)
+          print(f'  Performance: {perf} | A11y: {a11y} | SEO: {seo} | BP: {bp}')
           failed = []
-          if a11y < 80: failed.append(f'Accessibility {a11y} < 80')
-          if seo < 80: failed.append(f'SEO {seo} < 80')
+          if perf < min_perf: failed.append(f'Performance {perf} < {min_perf}')
+          if a11y < min_a11y: failed.append(f'Accessibility {a11y} < {min_a11y}')
+          if seo  < min_seo : failed.append(f'SEO {seo} < {min_seo}')
+          if bp   < min_bp  : failed.append(f'Best-Practices {bp} < {min_bp}')
           if failed:
-              for f in failed: print(f'  ::warning::{f}')
+              for f in failed: print(f'  ::error::{f}')
               sys.exit(1)
-          " "$REPORT"
+          PYEOF
               if [ $? -ne 0 ]; then FAILED=1; fi
             fi
           done
           if [ $FAILED -eq 1 ]; then
-            echo "::error::One or more pages failed Lighthouse gates"
+            echo "::error::Lighthouse-budgets fejlede — se ovenfor for detaljer"
             exit 1
           fi

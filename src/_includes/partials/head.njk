@@ -42,6 +42,9 @@
 <link rel="apple-touch-icon" href="{{ site.logo.image }}">
 <link rel="mask-icon" href="{{ site.logo.image }}" color="{{ site.themeColor or '#1E3D40' }}">
 
+<!-- PWA: installerbar app + offline-fallback -->
+<link rel="manifest" href="/manifest.webmanifest">
+
 <!-- Fonts (self-hostet — ingen 3rd-party, ingen tracking, hurtig LCP) -->
 {%- for f in site.fonts.preload %}
 <link rel="preload" href="{{ f }}" as="font" type="font/woff2" crossorigin>

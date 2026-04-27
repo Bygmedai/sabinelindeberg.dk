@@ -387,6 +387,7 @@ extraHead: |
       </div>
       <div class="hero-photo" data-reveal>
         <picture>
+          <source srcset="/assets/materiale/sabine-portrait.avif" type="image/avif">
           <source srcset="/assets/materiale/sabine-portrait.webp" type="image/webp">
           <img src="/assets/materiale/sabine-portrait.jpg" alt="Sabine Lindeberg — terapeut og hypnoterapeut" width="420" height="560" fetchpriority="high" decoding="async">
         </picture>
@@ -520,7 +521,7 @@ extraHead: |
   <div class="container" data-reveal>
     <span class="section-label">Tag første skridt</span>
     <h2>Klar til at finde din vej?</h2>
-    <p>Der er ingen forkerte tidspunkter at tage det første skridt. Ring <a href="tel:+4541120149" style="color: var(--gold); text-decoration: none; font-weight: 600;">+45 4112 0149</a> eller skriv — jeg vender tilbage hurtigst muligt.</p>
+    <p>Der er ingen forkerte tidspunkter at tage det første skridt. Ring <a href="tel:{{ site.phoneE164 }}" style="color: var(--gold); text-decoration: none; font-weight: 600;">{{ site.phone }}</a> eller skriv — jeg vender tilbage hurtigst muligt.</p>
     <div class="cta-buttons">
       <a href="/kontakt/" class="btn btn-gold">Book en samtale</a>
       <a href="/kontakt/" class="btn btn-teal">Kontakt mig</a>
