@@ -1,183 +1,59 @@
 ---
 layout: base.njk
-title: "Booking & Kontakt — Indre Kald og Kraft"
+title: "Booking og Kontakt"
 description: "Kontakt Sabine Lindeberg i Frederikssund. Book hypnoseterapi, terapeutisk samtale eller shamanistiske cirkler."
-ogTitle: "Booking & Kontakt — Indre Kald og Kraft"
+ogTitle: "Booking og Kontakt"
 ogDescription: "Skriv, ring eller book direkte online. Kontakt Sabine Lindeberg."
 jsonLd: |
   {
     "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "mainEntity": {
-      "@type": "LocalBusiness",
-      "name": "Indre Kald og Kraft — Sabine Lindeberg",
-      "url": "https://sabinelindeberg.dk",
-      "telephone": "+4541120149",
-      "email": "sabinelindeberg@hotmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Frederikssund",
-        "addressCountry": "DK"
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "mainEntity": { "@id": "https://sabinelindeberg.dk/#business" }
       },
-      "areaServed": "Frederikssund, Denmark"
-    }
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Forside", "item": "https://sabinelindeberg.dk/" },
+          { "@type": "ListItem", "position": 2, "name": "Booking og Kontakt", "item": "https://sabinelindeberg.dk/kontakt/" }
+        ]
+      }
+    ]
   }
 extraHead: |
   <style>
-  /* ========== BUTTONS ========== */
-  .btn {
-    display: inline-block;
-    padding: 15px 36px;
-    border-radius: 6px;
-    font-family: var(--font-body);
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    transition: var(--transition);
-    cursor: pointer;
-    border: none;
-  }
-
-  .btn-gold {
-    background: var(--gold);
-    color: var(--petrol);
-  }
-
-  .btn-gold:hover {
-    background: var(--gold-light);
-    color: var(--petrol);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
-  }
-
-  .btn-teal {
-    background: var(--teal);
-    color: #FFFFFF;
-  }
-
-  .btn-teal:hover {
-    background: var(--teal-light);
-    color: #FFFFFF;
-    transform: translateY(-2px);
-  }
-
-  /* ========== SECTION LABELS ========== */
-  .section-label {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-
-  /* ========== HERO ========== */
-  .hero {
-    position: relative;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    background: var(--petrol);
-    overflow: hidden;
-    padding-top: 72px;
-  }
-
-  .hero-bg {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('/assets/materiale/sabine-smile.jpg') center/cover no-repeat;
-    opacity: 0.15;
-    filter: blur(1px);
-  }
-
-  .hero-gradient {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 250px;
-    background: linear-gradient(to top, var(--petrol), transparent);
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 0;
-    text-align: center;
-  }
-
-  .hero-label {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-    opacity: 0.9;
-  }
-
-  .hero h1 {
-    font-size: clamp(40px, 6vw, 62px);
-    font-weight: 400;
-    color: var(--white);
-    margin-bottom: 10px;
-    font-style: italic;
-  }
-
-  .hero-tagline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18px, 2.5vw, 23px);
-    font-weight: 400;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 20px;
-    max-width: 700px;
-  }
+  /* Side-unik: hero-bg, kontakt-layout, formular og praktisk info. */
+  .hero-bg { background-image: url('/assets/materiale/sabine-smile.jpg'); }
+  .hero { min-height: 80vh; }
 
   /* ========== MAIN CONTENT ========== */
-  .main-content {
-    padding: 100px 0;
-    background: var(--sand);
-  }
-
+  .main-content { padding: 100px 0; background: var(--sand); }
   .main-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: flex-start;
   }
-
   .contact-info h2 {
     font-size: clamp(28px, 4vw, 38px);
     font-style: italic;
     color: var(--petrol);
     margin-bottom: 24px;
   }
-
   .contact-info p {
     font-size: 18px;
     color: var(--text);
     line-height: 1.9;
     margin-bottom: 16px;
   }
-
-  .contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    margin: 32px 0;
-  }
-
+  .contact-details { display: flex; flex-direction: column; gap: 18px; margin: 32px 0; }
   .detail-block {
     padding: 20px;
-    background: var(--white);
+    background: #FFFFFF;
     border-radius: var(--radius);
     border-left: 4px solid var(--gold);
   }
-
   .detail-label {
     font-size: 12px;
     font-weight: 500;
@@ -186,33 +62,23 @@ extraHead: |
     color: var(--gold);
     margin-bottom: 8px;
   }
-
-  .detail-content {
-    font-size: 18px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .detail-content a {
-    color: var(--teal);
-  }
-
-  .detail-content a:hover {
-    color: var(--gold);
-  }
+  .detail-content { font-size: 18px; color: var(--text); font-weight: 500; }
+  .detail-content a { color: var(--teal); }
+  .detail-content a:hover { color: var(--gold); }
 
   /* ========== FORM ========== */
   .contact-form {
-    background: var(--white);
+    background: #FFFFFF;
     padding: 40px;
     border-radius: var(--radius);
     box-shadow: 0 8px 32px rgba(0,0,0,0.06);
   }
-
-  .form-group {
-    margin-bottom: 24px;
-  }
-
+  .form-intro { font-size: 15px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.6; }
+  .form-status { margin-top: 16px; font-size: 15px; line-height: 1.5; min-height: 1.5em; }
+  .form-status.is-success { color: var(--teal); }
+  .form-status.is-error { color: var(--red); }
+  .hp-field { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  .form-group { margin-bottom: 24px; }
   .form-group label {
     display: block;
     font-size: 16px;
@@ -220,32 +86,24 @@ extraHead: |
     color: var(--text);
     margin-bottom: 8px;
   }
-
   .form-group input,
   .form-group textarea {
     width: 100%;
     padding: 14px 16px;
     border: 1px solid rgba(30, 61, 64, 0.2);
     border-radius: 6px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 16px;
     color: var(--text);
     transition: var(--transition);
   }
-
   .form-group input:focus,
   .form-group textarea:focus {
     outline: none;
     border-color: var(--gold);
     background: rgba(212, 175, 55, 0.04);
   }
-
-  .form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-    font-family: 'Jost', sans-serif;
-  }
-
+  .form-group textarea { resize: vertical; min-height: 120px; font-family: var(--font-body); }
   .form-submit {
     width: 100%;
     padding: 16px;
@@ -253,114 +111,153 @@ extraHead: |
     color: var(--petrol);
     border: none;
     border-radius: 6px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
   }
-
   .form-submit:hover {
     background: var(--gold-light);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
   }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* ========== BOOKING EMBED (Cal.com — kun aktiv hvis site.booking.calcom) ========== */
+  .booking-embed-section { padding: 80px 0; background: var(--sand-light); }
+  .booking-embed-header { text-align: center; margin-bottom: 40px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .booking-embed-header h2 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-style: italic;
+    color: var(--petrol);
+    margin-bottom: 16px;
+  }
+  .booking-embed-header p { font-size: 17px; color: var(--text); }
+  .cal-embed {
+    background: #FFFFFF;
+    border-radius: var(--radius);
+    min-height: 600px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
 
   /* ========== PRACTICAL INFO ========== */
-  .practical-section {
-    padding: 100px 0;
-    background: var(--white);
-  }
+  .practical-section { padding: 100px 0; background: #FFFFFF; }
+  .practical-header { text-align: center; margin-bottom: 48px; }
+  .practical-header h2 { font-size: clamp(28px, 4vw, 42px); font-style: italic; margin-bottom: 16px; }
+  .practical-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .practical-card { padding: 40px; background: var(--sand-light); border-radius: var(--radius); }
+  .practical-card h3 { font-size: 22px; font-style: italic; margin-bottom: 16px; color: var(--petrol); }
+  .practical-card p { font-size: 18px; color: var(--text); line-height: 1.9; }
+  .practical-card ul { font-size: 18px; color: var(--text); margin-top: 16px; padding-left: 20px; }
+  .practical-card li { margin-bottom: 10px; line-height: 1.8; }
 
-  .practical-header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .practical-header h2 {
-    font-size: clamp(28px, 4vw, 42px);
-    font-style: italic;
-    margin-bottom: 16px;
-  }
-
-  .practical-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-  }
-
-  .practical-card {
-    padding: 40px;
-    background: var(--sand-light);
-    border-radius: var(--radius);
-  }
-
-  .practical-card h3 {
-    font-size: 22px;
-    font-style: italic;
-    margin-bottom: 16px;
-    color: var(--petrol);
-  }
-
-  .practical-card p {
-    font-size: 18px;
-    color: var(--text);
-    line-height: 1.9;
-  }
-
-  .practical-card ul {
-    font-size: 18px;
-    color: var(--text);
-    margin-top: 16px;
-    padding-left: 20px;
-  }
-
-  .practical-card li {
-    margin-bottom: 10px;
-    line-height: 1.8;
-  }
-
-  /* ========== RESPONSIVE ========== */
   @media (max-width: 960px) {
     .main-inner { grid-template-columns: 1fr; }
     .practical-grid { grid-template-columns: 1fr; }
   }
-
   @media (max-width: 680px) {
     .practical-card { padding: 24px; }
     .contact-form { padding: 24px; }
   }
-
-  /* FE6: View Transitions */
-  @view-transition { navigation: auto; }
-  ::view-transition-old(root) { animation: vt-fade-out 0.25s ease; }
-  ::view-transition-new(root) { animation: vt-fade-in 0.25s ease; }
-  @keyframes vt-fade-out { to { opacity: 0; } }
-  @keyframes vt-fade-in { from { opacity: 0; } }
   </style>
 extraScripts: |
   <script>
-  // Simple form handling with mailto
-  const form = document.querySelector('.contact-form form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const message = document.getElementById('message').value;
+  (function () {
+    var form = document.querySelector('.contact-form form');
+    if (!form) return;
 
-      const subject = encodeURIComponent('Ny besked fra: ' + name);
-      const body = encodeURIComponent(
+    var status = document.getElementById('formStatus');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    // form.action er sat til Formspree-URL hvis konfigureret; ellers tom -> mailto-fallback.
+    var endpoint = form.getAttribute('data-endpoint') || '';
+
+    function announce(msg, isError) {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.toggle('is-error', !!isError);
+      status.classList.toggle('is-success', !isError);
+    }
+
+    function lockSubmit(text) {
+      if (!submitBtn) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = text;
+    }
+
+    function unlockSubmit() {
+      if (!submitBtn) return;
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send besked';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Honeypot — bots fill hidden fields, humans don't.
+      var hp = form.querySelector('input[name="company"]');
+      if (hp && hp.value) {
+        announce('Tak. Beskeden blev modtaget.', false);
+        form.reset();
+        return;
+      }
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var name = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var message = document.getElementById('message').value.trim();
+
+      // Branch 1: Ægte backend (Formspree el. lign.) — async fetch, ingen redirect.
+      if (endpoint) {
+        lockSubmit('Sender …');
+        var data = new FormData();
+        data.append('name', name);
+        data.append('email', email);
+        data.append('phone', phone);
+        data.append('message', message);
+        data.append('_subject', 'Ny besked fra: ' + name);
+
+        fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json().catch(function () { return {}; });
+          })
+          .then(function () {
+            announce('Tak — din besked er sendt. Jeg vender tilbage hurtigst muligt.', false);
+            form.reset();
+            lockSubmit('Sendt');
+          })
+          .catch(function () {
+            announce('Beskeden kunne ikke afsendes. Prøv igen, eller ring +45 4112 0149.', true);
+            unlockSubmit();
+          });
+        return;
+      }
+
+      // Branch 2: Mailto-fallback — åbner brugerens email-klient.
+      var subject = encodeURIComponent('Ny besked fra: ' + name);
+      var body = encodeURIComponent(
         'Navn: ' + name + '\n' +
         'Email: ' + email + '\n' +
         'Telefon: ' + phone + '\n' +
         '\nBesked:\n' + message
       );
-
       window.location.href = 'mailto:sabinelindeberg@hotmail.com?subject=' + subject + '&body=' + body;
+      announce('Tak — din emailklient åbner nu. Hvis ikke, ring '
+        + '+45 4112 0149 eller skriv til sabinelindeberg@hotmail.com.', false);
+      lockSubmit('Sendt');
     });
-  }
+  })();
   </script>
 ---
 
@@ -372,11 +269,97 @@ extraScripts: |
   <div class="container">
     <div class="hero-content">
       <span class="hero-label">Kom i kontakt</span>
-      <h1>Booking & Kontakt</h1>
+      <h1>Booking &amp; Kontakt</h1>
       <p class="hero-tagline">Skriv, ring eller book direkte online</p>
     </div>
   </div>
 </section>
+
+{% if site.booking.calcom %}
+<!-- ========== CAL.COM BOOKING (kun aktiv når site.booking.calcom er sat) ========== -->
+<section class="booking-embed-section" aria-labelledby="bookingHeading">
+  <div class="container" data-reveal>
+    <div class="booking-embed-header">
+      <span class="section-label">Selvbetjent booking</span>
+      <h2 id="bookingHeading">Vælg en tid der passer dig</h2>
+      <p>Find en ledig tid direkte i kalenderen — eller fortsæt til kontaktformularen længere nede.</p>
+    </div>
+    <div id="cal-booking-placeholder"
+         class="cal-embed"
+         data-cal-namespace="{{ site.booking.calcom }}"
+         aria-busy="true">
+      <noscript>
+        <p>Aktivér JavaScript for at se booking-kalenderen, eller
+          <a href="https://cal.com/{{ site.booking.calcom }}" target="_blank" rel="noopener">
+            book direkte hos Cal.com
+          </a>.
+        </p>
+      </noscript>
+    </div>
+  </div>
+</section>
+<script>
+// Cal.com inline-embed — lazy-loadet når sektionen scrolles ind.
+(function () {
+  var slot = document.getElementById('cal-booking-placeholder');
+  if (!slot || !('IntersectionObserver' in window)) return;
+  var ns = slot.getAttribute('data-cal-namespace');
+  if (!ns) return;
+
+  var loaded = false;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting || loaded) return;
+      loaded = true;
+      io.disconnect();
+      // Cal.com officielle embed-snippet (https://cal.com/docs/embeds)
+      (function (C, A, L) {
+        var p = function (a, ar) { a.q.push(ar); };
+        var d = C.document;
+        C.Cal = C.Cal || function () {
+          var cal = C.Cal, ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            var api = function () { p(api, arguments); };
+            var namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      Cal("init", ns, { origin: "https://cal.com" });
+      Cal.ns[ns]("inline", {
+        elementOrSelector: "#cal-booking-placeholder",
+        config: { layout: "month_view", theme: "light" },
+        calLink: ns
+      });
+      Cal.ns[ns]("ui", {
+        cssVarsPerTheme: {
+          light: { "cal-brand": "#D4AF37" }
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view"
+      });
+      slot.removeAttribute('aria-busy');
+    });
+  }, { rootMargin: '200px' });
+
+  io.observe(slot);
+})();
+</script>
+{% endif %}
 
 <!-- ========== MAIN CONTENT ========== -->
 <section class="main-content">
@@ -393,54 +376,68 @@ extraScripts: |
           <div class="detail-block">
             <div class="detail-label">Telefon</div>
             <div class="detail-content">
-              <a href="tel:+4541120149">+45 4112 0149</a>
+              <a href="tel:{{ site.phoneE164 }}">{{ site.phone }}</a>
             </div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Email</div>
             <div class="detail-content">
-              <a href="mailto:sabinelindeberg@hotmail.com">sabinelindeberg@hotmail.com</a>
+              <a href="mailto:{{ site.email }}">{{ site.email }}</a>
             </div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Lokation</div>
-            <div class="detail-content">Frederikssund, Danmark</div>
+            <div class="detail-content">{{ site.address.locality }}, Danmark</div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Priser</div>
-            <div class="detail-content">Hypnoseterapi: 1.200 kr · Rygeafvænning: 2.800 kr</div>
+            <div class="detail-content">{{ site.prices.summary }}</div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Sessionslængde</div>
-            <div class="detail-content">60–90 minutter</div>
+            <div class="detail-content">{{ site.session.duration }}</div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Åbningstider</div>
+            <div class="detail-content">{{ site.openingHoursDisplay }}</div>
           </div>
           <div class="detail-block">
             <div class="detail-label">Format</div>
-            <div class="detail-content">I Frederikssund eller online</div>
+            <div class="detail-content">{{ site.session.format }}</div>
           </div>
         </div>
       </div>
 
       <div class="contact-form">
         <h3 style="font-size: 20px; margin-bottom: 24px; color: var(--petrol);">Send en besked</h3>
-        <form>
+        <p id="formIntro" class="form-intro">
+          Felter markeret med <span aria-hidden="true">*</span><span class="sr-only">stjerne</span> er obligatoriske.
+          Beskeden åbnes i din emailklient — så du selv afsender og har en kopi.
+        </p>
+        <form aria-describedby="formIntro" novalidate{% if site.forms.endpoint %} action="{{ site.forms.endpoint }}" method="POST" data-endpoint="{{ site.forms.endpoint }}"{% endif %}>
           <div class="form-group">
-            <label for="name">Dit navn</label>
-            <input type="text" id="name" name="name" required>
+            <label for="name">Dit navn <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
           </div>
           <div class="form-group">
-            <label for="email">Din email</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Din email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
           </div>
           <div class="form-group">
             <label for="phone">Telefonnummer (valgfrit)</label>
-            <input type="tel" id="phone" name="phone">
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel">
           </div>
           <div class="form-group">
-            <label for="message">Din besked</label>
-            <textarea id="message" name="message" required></textarea>
+            <label for="message">Din besked <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <!-- Honeypot — visually hidden, off-screen, off-tab, ignored by users. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="company">Virksomhed (lad være tom)</label>
+            <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
           </div>
           <button type="submit" class="form-submit">Send besked</button>
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>

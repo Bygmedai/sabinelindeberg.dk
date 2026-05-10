@@ -1,0 +1,26 @@
+{
+  "name": "Indre Kald og Kraft — Sabine Lindeberg",
+  "short_name": "Indre Kald",
+  "description": "Hypnoseterapi, terapeutisk samtale og shamanistiske cirkler i Frederikssund.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1E3D40",
+  "orientation": "portrait",
+  "lang": "da",
+  "icons": [
+    {
+      "src": "/assets/materiale/logo-tree.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/materiale/logo-tree.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}

@@ -9,15 +9,14 @@
     site.ga4         — GA4 Measurement ID (omit to disable)
     site.fonts.url   — Google Fonts URL
     site.og.*        — Default OG image settings
+    site.themeColor  — Theme color for mobile browser chrome
+    site.logo.image  — Used as favicon source
   Per-page frontmatter: title, description, ogTitle, ogDescription, ogImage, noindex, extraHead
 #}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{% if site.ga4 %}
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga4 }}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.ga4 }}');</script>
-{% endif %}
+<meta name="theme-color" content="{{ site.themeColor or '#1E3D40' }}">
+<meta name="color-scheme" content="light">
 <title>{{ title }} — {{ site.name }}</title>
 <meta name="description" content="{{ description }}">
 <meta property="og:title" content="{{ ogTitle or title }} — {{ site.name }}">
@@ -25,23 +24,91 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:image" content="{{ site.url }}{{ ogImage or site.og.defaultImage }}">
+<meta property="og:image:alt" content="{{ ogImageAlt or (ogTitle or title) }}">
 <meta property="og:image:width" content="{{ site.og.imageWidth }}">
 <meta property="og:image:height" content="{{ site.og.imageHeight }}">
 <meta property="og:locale" content="{{ site.locale }}">
+<meta property="og:site_name" content="{{ site.name }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ ogTitle or title }} — {{ site.name }}">
 <meta name="twitter:description" content="{{ ogDescription or description }}">
 <meta name="twitter:image" content="{{ site.url }}{{ ogImage or site.og.defaultImage }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="alternate" hreflang="da" href="{{ site.url }}{{ page.url }}">
 {% if noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Favicons (PNG fallback — covers iOS, Android, modern browsers) -->
+<link rel="icon" type="image/png" href="{{ site.logo.image }}">
+<link rel="apple-touch-icon" href="{{ site.logo.image }}">
+<link rel="mask-icon" href="{{ site.logo.image }}" color="{{ site.themeColor or '#1E3D40' }}">
+
+<!-- PWA: installerbar app + offline-fallback -->
+<link rel="manifest" href="/manifest.webmanifest">
+
+<!-- Fonts (self-hostet — ingen 3rd-party, ingen tracking, hurtig LCP) -->
+{%- for f in site.fonts.preload %}
+<link rel="preload" href="{{ f }}" as="font" type="font/woff2" crossorigin>
+{%- endfor %}
 <link href="{{ site.fonts.url }}" rel="stylesheet">
+
 <!-- View Transitions API -->
 <meta name="view-transition" content="same-origin">
-<!-- Lag 1: Base CSS (reset, tokens, utilities) — WP F-1 -->
+
+<!-- Lag 1: Base CSS (reset, tokens, utilities) -->
 <link rel="stylesheet" href="/assets/css/base.css">
-<!-- Lag 4: Skin CSS (kundespecifik) — WP F-5 -->
+<!-- Lag 3: Komponenter (delt på tværs af sider) -->
+<link rel="stylesheet" href="/assets/css/components.css">
+<!-- Lag 4: Skin CSS (kundespecifik) -->
 {% if site.skin.file %}<link rel="stylesheet" href="/assets/css/skins/{{ site.skin.file }}">{% endif %}
 {{ layoutHead | safe }}
 {{ extraHead | safe }}
+
+{% if site.ga4 %}
+<!-- Google Analytics 4 — gated by consent (GDPR, ePrivacy/cookiebekendtgørelsen).
+     gtag.js loads only after the user accepts in the consent banner. -->
+<script>
+(function () {
+  var KEY = 'sl-consent-v1';
+  var stored = null;
+  try { stored = localStorage.getItem(KEY); } catch (e) {}
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  // Default to denied (GDPR-compliant default).
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted'
+  });
+
+  function loadGa() {
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id={{ site.ga4 }}';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', '{{ site.ga4 }}', { anonymize_ip: true });
+  }
+
+  if (stored === 'granted') {
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    loadGa();
+  }
+
+  window.__slGrantConsent = function () {
+    try { localStorage.setItem(KEY, 'granted'); } catch (e) {}
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    loadGa();
+  };
+  window.__slDeclineConsent = function () {
+    try { localStorage.setItem(KEY, 'denied'); } catch (e) {}
+  };
+  window.__slConsentStored = stored;
+})();
+</script>
+{% endif %}
