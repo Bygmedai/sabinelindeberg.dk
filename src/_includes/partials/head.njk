@@ -54,12 +54,19 @@
 <!-- View Transitions API -->
 <meta name="view-transition" content="same-origin">
 
-<!-- Lag 1: Base CSS (reset, tokens, utilities) -->
-<link rel="stylesheet" href="/assets/css/base.css">
-<!-- Lag 3: Komponenter (delt på tværs af sider) -->
-<link rel="stylesheet" href="/assets/css/components.css">
-<!-- Lag 4: Skin CSS (kundespecifik) -->
-{% if site.skin.file %}<link rel="stylesheet" href="/assets/css/skins/{{ site.skin.file }}">{% endif %}
+<!-- Critical CSS (inlined, ~5 KB) — eliminerer render-blocking eksterne stylesheets for first paint. -->
+<style>{% include "partials/critical-css.njk" %}</style>
+
+<!-- Resterende CSS loades async via preload+onload-pattern, så de ikke
+     blokerer first paint. <noscript>-fallback for brugere uden JS. -->
+<link rel="preload" href="/assets/css/base.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="/assets/css/components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+{% if site.skin.file %}<link rel="preload" href="/assets/css/skins/{{ site.skin.file }}" as="style" onload="this.onload=null;this.rel='stylesheet'">{% endif %}
+<noscript>
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  {% if site.skin.file %}<link rel="stylesheet" href="/assets/css/skins/{{ site.skin.file }}">{% endif %}
+</noscript>
 {{ layoutHead | safe }}
 {{ extraHead | safe }}
 
