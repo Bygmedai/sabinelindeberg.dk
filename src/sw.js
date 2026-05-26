@@ -3,7 +3,7 @@
 //   - Static assets (CSS, fonts, billeder, logo): cache-first, falder tilbage til network.
 //   - HTML-sider: network-first, falder tilbage til cache, og til /offline/ hvis offline.
 // Versionsnøgle bumpes når CSS/JS-strukturen ændres så gamle caches ryddes.
-const VERSION = 'sl-v1';
+const VERSION = 'sl-v2';
 const STATIC_CACHE = `${VERSION}-static`;
 const PAGE_CACHE   = `${VERSION}-pages`;
 
@@ -63,7 +63,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Static assets: cache-first
+  // CSS: stale-while-revalidate — server cache hurtigt, men hent altid en
+  // frisk version i baggrunden og opdatér cachen, så en CSS-ændring aldrig
+  // hænger fast i en gammel cache (assets er ikke fingerprintede endnu).
+  if (/\.css$/i.test(url.pathname)) {
+    event.respondWith(
+      caches.open(STATIC_CACHE).then((cache) =>
+        cache.match(request).then((cached) => {
+          const network = fetch(request).then((res) => {
+            if (res.ok) cache.put(request, res.clone());
+            return res;
+          }).catch(() => cached);
+          return cached || network;
+        })
+      )
+    );
+    return;
+  }
+
+  // Øvrige statiske assets (fonte, billeder, js): cache-first
   if (isStaticAsset(url)) {
     event.respondWith(
       caches.match(request).then((cached) => cached || fetch(request).then((res) => {

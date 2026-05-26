@@ -84,6 +84,14 @@ nav .container{display:flex;align-items:center;justify-content:space-between;hei
 .hero-content{position:relative;z-index:2}
 .hero h1{font-size:clamp(40px,6vw,62px);font-weight:400;color:#FFFFFF;margin-bottom:10px;font-style:italic}
 
+.btn{display:inline-block;padding:15px 36px;border-radius:6px;font-family:var(--font-body);font-size:16px;font-weight:500;letter-spacing:0.5px;transition:var(--transition);cursor:pointer;border:none}
+.btn-gold{background:var(--gold);color:var(--petrol)}
+.btn-gold:hover{background:var(--gold-light);color:var(--petrol);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,175,55,0.3)}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid rgba(212,175,55,0.4)}
+.btn-outline:hover{border-color:var(--gold);background:rgba(212,175,55,0.08);color:var(--gold)}
+.btn-teal{background:var(--teal);color:#FFFFFF}
+.btn-teal:hover{background:var(--teal-light);color:#FFFFFF;transform:translateY(-2px)}
+
 @media (max-width:680px){
   body{font-size:17px}
   .nav-links{display:none}
