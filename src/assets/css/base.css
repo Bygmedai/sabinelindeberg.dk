@@ -147,21 +147,31 @@ a {
   top: 8px;
   left: 8px;
   z-index: 1000;
-  padding: 10px 16px;
+  /* Skjult-til-fokus via clip: elementet fylder 1px og er klippet væk, så der
+     ikke findes nogen synlig guld-boks i dokumentet — heller ikke når browseren
+     afslører området over viewporten ved elastisk overscroll i toppen. */
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
   background: var(--gold, #D4AF37);
   color: var(--petrol, #1E3D40);
   font-family: var(--font-body);
   font-weight: 600;
   border-radius: 6px;
   text-decoration: none;
-  /* Skjul via transform, så elementets højde (line-height/font) aldrig kan
-     efterlade en synlig stribe i toppen — uafhængig af tekst og skrifttype. */
-  transform: translateY(calc(-100% - 16px));
-  transition: transform 0.2s ease;
 }
 
 .skip-link:focus {
-  transform: translateY(0);
+  width: auto;
+  height: auto;
+  padding: 10px 16px;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
   outline: 2px solid var(--petrol, #1E3D40);
   outline-offset: 2px;
 }
