@@ -144,7 +144,7 @@ a {
 /* ---------- ACCESSIBILITY: SKIP LINK ---------- */
 .skip-link {
   position: absolute;
-  top: -40px;
+  top: 8px;
   left: 8px;
   z-index: 1000;
   padding: 10px 16px;
@@ -154,11 +154,14 @@ a {
   font-weight: 600;
   border-radius: 6px;
   text-decoration: none;
-  transition: top 0.2s ease;
+  /* Skjul via transform, så elementets højde (line-height/font) aldrig kan
+     efterlade en synlig stribe i toppen — uafhængig af tekst og skrifttype. */
+  transform: translateY(calc(-100% - 16px));
+  transition: transform 0.2s ease;
 }
 
 .skip-link:focus {
-  top: 8px;
+  transform: translateY(0);
   outline: 2px solid var(--petrol, #1E3D40);
   outline-offset: 2px;
 }
