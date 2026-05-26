@@ -29,9 +29,9 @@ function discoverPages(dir, prefix = '') {
   return pages;
 }
 
-// Get repo root (where HTML files live)
-const REPO_ROOT = path.resolve(__dirname, '..');
-const ALL_PAGES = discoverPages(REPO_ROOT);
+// Pages live in the 11ty build output (_site/), not the repo root.
+const BUILD_DIR = path.resolve(__dirname, '..', '_site');
+const ALL_PAGES = discoverPages(BUILD_DIR, '_site/');
 
 // Screenshot directory
 const SCREENSHOT_DIR = path.join(__dirname, 'screenshots');
@@ -91,7 +91,7 @@ const VIEWPORTS = [
 
 // Only screenshot key pages (not all 30)
 const KEY_PAGES = ALL_PAGES.filter(p =>
-  ['index.html', 'services.html', 'priser.html', 'om.html', 'foer-efter.html'].includes(p) ||
+  p.endsWith('/index.html') ||
   p === ALL_PAGES[0] // Always include first page
 ).slice(0, 6);
 
@@ -129,7 +129,7 @@ test.describe('Responsive Screenshots', () => {
 // ============================================================
 test.describe('Critical Elements', () => {
   test('index.html has nav, hero, footer', async ({ page }) => {
-    await page.goto(`${BASE_URL}/index.html`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE_URL}/_site/index.html`, { waitUntil: 'networkidle' });
 
     // Nav exists
     await expect(page.locator('nav, .nav')).toBeVisible();
