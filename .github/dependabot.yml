@@ -1,0 +1,27 @@
+# Dependabot config — S549 TIER-POLITIK (Stevens TIER-SVAR, 2026-08-06).
+# Dette repo er IKKE tier-value: INGEN version-opdateringer, med vilje.
+# open-pull-requests-limit: 0 stopper al version-støj. Security-opdateringer
+# rammes IKKE af limit (GitHub docs) og samles i én PR pr. økosystem —
+# en reel CVE giver stadig præcis én PR, alt andet giver nul.
+# Kanon: governance 06-quality-and-ops/dependencies/REPO-TIER-REGISTRY-v1.0.md
+# Ændring af politik = ændr repoets tier-topic + denne fil, intet andet.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 0
+    groups:
+      npm-security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 0
+    groups:
+      actions-security:
+        applies-to: security-updates
+        patterns: ["*"]
